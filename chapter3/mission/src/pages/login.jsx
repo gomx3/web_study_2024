@@ -12,13 +12,14 @@ export default LoginPage;
 
 const Container = styled.div`
     position: fixed;
-    top: 77px;
-    left: 150px;
+    top: 97px;
+    left: 200px;
     width: 100%;
     height: 100vh;
     background-color: black;
 `
 const TextBox = styled.h1`
     margin: 20px;
+    margin-bottom: -5px;
     color: white;
 `

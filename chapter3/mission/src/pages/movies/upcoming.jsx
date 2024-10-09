@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import View from '../components/View';
+import View from '../../components/View';
 
-const BASE_URL = `https://api.themoviedb.org/3/account/21559023/favorite/movies?language=ko-KR&page=1&sort_by=created_at.asc`
+const BASE_URL = `https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1`
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
-const MainPage = () => {
+const UpComing = () => {
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
@@ -24,12 +24,13 @@ const MainPage = () => {
 
     return (
         <Container>
+            <TextBox>개봉 예정 중인 작품</TextBox>
             <View movies={movies}/>
         </Container>
     );
 };
 
-export default MainPage;
+export default UpComing;
 
 const Container = styled.div`
     position: fixed;
@@ -38,4 +39,9 @@ const Container = styled.div`
     width: 100%;
     height: 100vh;
     background-color: black;
+`
+const TextBox = styled.h1`
+    margin: 20px;
+    margin-bottom: -5px;
+    color: white;
 `

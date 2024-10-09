@@ -23,32 +23,31 @@ export default Sidebar;
 
 const Aside = styled.aside`
     position: fixed;
-    top: 77px;
+    top: 97px;
     left: 0;
-    width: 150px;
+    width: 200px;
     height: 100%;
     background-color: #121212;
 `
 const MenuItem = styled.div`
     display: flex;
     align-items: center;
-    margin: 10px 15px;
-    margin-left: 20px;
+    padding: 3px 7px;
+    margin-left: 30px;
+    &:hover {
+        background-color: #828282;
+    }
 `
 const MenuLink = styled(Link)`
     display: flex;
     align-items: center;
+    height: 25px;
     padding: 7px 10px;
     margin-left: 7px;
-    background-color: #121212;
     color: white;
     border: none;
     border-radius: 10px;
     text-decoration: none;
-    text-align: center;
     font-size: 15px;
     transition: background-color 0.3s ease;
-    &:hover {
-        background-color: #828282;
-    }
 `

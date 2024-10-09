@@ -1,45 +1,49 @@
-import { MOVIES } from '../mocks/movies';
-import styled from 'styled-components';
+// import { MOVIES } from '../mocks/movies';
+import styled from 'styled-components'
 
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w200"
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w400";
 
-const View = () => {
+const View = ({movies}) => {
     return (
-        <Container>
-          <MovieList>
-            {MOVIES.results.map((movie) => (
-              <MovieItem key={movie.id}>
-                <MoviePoster 
-                  src={`${IMAGE_BASE_URL}${movie.poster_path}`} 
-                  alt={movie.title} >
-                </MoviePoster>
-                <HoverOverlay></HoverOverlay>
-              </MovieItem>
-            ))}
-          </MovieList>
-        </Container>
+      <Container>
+        <MovieList>
+          {movies.data?.results.map((movie) => (
+            <MovieItem key={movie.id}>
+              <MoviePoster 
+                src={`${IMAGE_BASE_URL}${movie.poster_path}`} 
+                alt={movie.title}
+              />
+              <HoverOverlay></HoverOverlay>
+              <MovieTitle>{movie.title}</MovieTitle>
+              <MovieDate>{movie.release_date}</MovieDate>
+            </MovieItem>
+          ))}
+        </MovieList>
+      </Container>
     );
 };
 
 export default View;
 
-
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  padding: 100px;
+  margin: 20px;
+  overflow-y: auto;
+  max-height: 100vh;
 `
 const MovieList = styled.div`
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
 `
 const MovieItem = styled.div`
   position: relative;
 `
 const MoviePoster = styled.img`
-  width: 100%;
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
 `
@@ -53,4 +57,17 @@ const HoverOverlay = styled.div`
   &:hover {
     opacity: 1;
   }
+`
+
+const MovieTitle = styled.div`
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #ccc;
+  font-weight: bold;
+`
+
+const MovieDate = styled.div`
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
 `

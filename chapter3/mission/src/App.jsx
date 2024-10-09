@@ -9,7 +9,7 @@ import SignupPage from './pages/signup';
 import NowPlaying from './pages/movies/now-playing';
 import Popular from './pages/movies/popular';
 import TopRated from './pages/movies/top-rated';
-import UpComing from './pages/movies/up-coming';
+import UpComing from './pages/movies/upcoming';
 import RootLayout from './layout/root-layout';
 
 const router = createBrowserRouter([
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         element: <TopRated/>
       },
       {
-        path: 'movies/up-coming',
+        path: 'movies/upcoming',
         element: <UpComing/>
       },
     ]

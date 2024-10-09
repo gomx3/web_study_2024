@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Navbar = () => {
     return (
         <Container>
-            <LogoLink to={'/'}>GOMFLIX</LogoLink>
+            <LogoLink to={'/'}>GOMCHA</LogoLink>
             <AuthSection>
                 <ButtonLink to={'/login'}>로그인</ButtonLink>
                 <ButtonLink to={'/signup'}>회원가입</ButtonLink>
@@ -27,21 +27,22 @@ const Container = styled.div`
 `
 const LogoLink = styled(Link)`
     left: 10px;
-    margin: 20px 30px;
-    color: #E50914;
+    margin: 30px 50px;
+    color: #FF007C;
     text-decoration: none;
     font-size: 30px;
     font-family: Roboto;
-    font-weight: 600; // 폰트 굵기
+    font-weight: 600;
 `
 const AuthSection = styled.div`
     display: flex;
-    justify-content: space-between;
-    padding: 20px 30px;
+    align-items: center;
+    margin: 20px 50px;
 `
 const ButtonLink = styled(Link)`
     display: flex;
     align-items: center;
+    height: 25px;
     padding: 7px 10px;
     margin-left: 10px;
     background-color: #121212;
@@ -49,10 +50,9 @@ const ButtonLink = styled(Link)`
     border: none;
     border-radius: 10px;
     text-decoration: none;
-    text-align: center;
     font-size: 15px;
     transition: background-color 0.3s ease;
     &:hover {
-        background-color: #E50914;
+        background-color: #FF007C;
     }
 `
