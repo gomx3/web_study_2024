@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>연습</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+        .text-box {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>연습을 해 보자!</h2>
+
+    <div class="container">
+        <button onclick="onButton()">ㄱㄱ!</button>
+    </div>
+    <p></p>
+
+    <p id="result"></p>
+
+    <script>
+        // 클래스 선언
+        class Student {
+            constructor(name, school) {
+                // 필드
+                this._name = name;  // 프라이빗 필드처럼 사용
+                this._school = school;
+            }
+            
+            // getter 메소드
+            get name() {
+                return this._name;
+            }
+            
+            get school() {
+                return this._school;
+            }
+
+            // setter 메소드
+            set name(newName) {
+                if (newName.length > 0) {  // 이름은 빈 문자열일 수 없다
+                    this._name = newName;
+                } else {
+                    console.log("이름은 비어 있을 수 없습니다.");
+                }
+            }
+
+            set school(newSchool) {
+                if (newSchool.length > 0) {  // 학교명은 빈 문자열일 수 없다
+                    this._school = newSchool;
+                } else {
+                    console.log("학교명은 비어 있을 수 없습니다.");
+                }
+            }
+            
+            // 메소드
+            introduction() {
+                console.log(`안녕하세요, ${this.name}입니다. ${this.school}에 다니고 있습니다.`);
+            }
+        }
+
+        function onButton() {
+            // 객체 생성
+            const student = new Student('Gom', '중앙대학교');
+
+            // getter를 이용해 필드 값 접근
+            console.log(student.name);  // Gom
+            console.log(student.school);  // 중앙대학교
+
+            // introduction 메소드 호출
+            student.introduction();  // 안녕하세요, Gom입니다. 중앙대학교에 다니고 있습니다.
+        
+            // setter를 이용해 필드 값 변경
+            student.name = 'Kim';
+            student.school = '한국대학교';
+
+            // introduction 메소드 호출
+            student.introduction();  // 안녕하세요, Kim입니다. 한국대학교에 다니고 있습니다.
+        }
+    </script>
+</body>
+</html>
