@@ -58,14 +58,12 @@ const HoverOverlay = styled.div`
     opacity: 1;
   }
 `
-
 const MovieTitle = styled.div`
   margin-top: 10px;
   font-size: 1.1rem;
   color: #ccc;
   font-weight: bold;
 `
-
 const MovieDate = styled.div`
   font-size: 0.9rem;
   color: #ccc;
