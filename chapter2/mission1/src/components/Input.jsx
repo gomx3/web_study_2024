@@ -1,10 +1,9 @@
 import React from 'react';
-import '../App.css';
+import styled from 'styled-components';
 
 function Input({ value, task, onChange, placeholder='' }) {
   return (
-    <input 
-      className='input'
+    <StyledInput
       value={value} 
       defaultValue={task}
       onChange={onChange}
@@ -14,3 +13,16 @@ function Input({ value, task, onChange, placeholder='' }) {
 }
 
 export default Input;
+
+
+const StyledInput = styled.input`
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 3px #b23a48;
+  }
+`;
