@@ -1,31 +1,49 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import './App.css';
 
 import Button from './components/Button';
 import Input from './components/Input';
 import TodoList from './components/TodoList';
+import Toggle from './components/Toggle';
+
+export const themes = {
+  light: {
+    background: "#f9f9f9",
+    color: "#000",
+    borderColor: "#ddd"
+  },
+  dark: {
+    background: "#1c1c1c",
+    color: "#ccc",
+    borderColor: "#aaa"
+  }
+};
 
 function App() {
 
-  const [todos, setTodos] = useState([
-    {id: 1, task: '투두 만들기'},
-    {id: 2, task: '워크북 채우기'},
-  ]);
+  const [theme, setTheme] = useState('dark');
+  const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
 
-  // 1. 추가하기
+  // 1. 할 일 추가
   const addTodo = () => {
     if (text.trim().length === 0) { alert('빈 문자는 등록이 불가능합니다.'); }
     else {
       const newId = todos.length > 0 ? todos[todos.length - 1].id + 1 : 1;
       setTodos((prev) => [
-        ...prev, // 얕은 복사
+        ...prev,
         {id: newId, task: text },
-        // {id: Math.floor(Math.random() * 100) + 2, task: text },
       ]);
       setText('');
     }
   }; 
+
+  // 테마 토글 함수
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+    console.log(theme === 'light' ? 'dark mode' : 'light mode')
+  }
 
   // 렌더링 방지 함수
   const handleSubmit = (e) => {
@@ -33,33 +51,51 @@ function App() {
   };
 
   return (
-    <Container>
-      <InputForm onSubmit={handleSubmit}>
-        <Input 
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder='할 일을 입력하세요'
-        />
-        <Button onClick={addTodo}>할 일 등록</Button>
-      </InputForm>
-      <TodoList 
-        todos={todos}
-        setTodos={setTodos}
-      />
-    </Container>
+    <div className={`App theme-${theme}`}>
+      <ThemeProvider theme={themes[theme]}>
+        <>
+          <Container>
+            <Section>
+              <h1>To-Do⭐</h1>
+              <Toggle toggleTheme={toggleTheme}/>
+            </Section>
+            <InputForm onSubmit={handleSubmit}>
+              <Input 
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder='할 일을 입력하세요'
+              />
+              <Button onClick={addTodo}>등록</Button>
+            </InputForm>
+            <TodoList 
+              todos={todos}
+              setTodos={setTodos}
+            />
+          </Container>
+        </>
+      </ThemeProvider>
+    </div>
   )
 }
 
 export default App;
 
 
+const Section = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
   margin-top: 50px;
   padding: 30px;
-  background-color: #f9f9f9;
   border-radius: 15px;
+  ${({ theme }) => `
+    background-color: ${theme.background};
+    color: ${theme.color};
+  `}
 `;
 
 const InputForm = styled.form`

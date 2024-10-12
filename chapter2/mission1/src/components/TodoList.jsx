@@ -9,7 +9,7 @@ function TodoList({ todos, setTodos }) {
   const [editingId, setEditingId] = useState('');
   const [editText, setEditText] = useState('');
 
-  // 2. 삭제하기
+  // 2. 삭제
   const deleteTodo = (id) => {
     setTodos((prev) => 
         prev
@@ -17,7 +17,7 @@ function TodoList({ todos, setTodos }) {
             .map((item, index) => ({ ...item, id: index + 1 })) // 아이템 삭제 후 id 업데이트 (재할당)
         );
   };
-  // 3. 수정하기
+  // 3. 수정
   const updateTodo = (id, text) => {
     setTodos((prev) =>
         prev.map((item) => item.id === id ? {...item, task: text} : item)
@@ -45,11 +45,11 @@ function TodoList({ todos, setTodos }) {
               </StyledTodoText>
             )}
 
-            <Button onClick={() => deleteTodo(todo.id)}>삭제하기</Button>
+            <Button onClick={() => deleteTodo(todo.id)}>삭제</Button>
             {editingId === todo.id ? (
-              <Button onClick={() => updateTodo(editingId, editText)}>수정완료</Button>
+              <Button onClick={() => updateTodo(editingId, editText)}>완료</Button>
             ) : (
-              <Button onClick={() => setEditingId(todo.id)}>수정하기</Button>
+              <Button onClick={() => setEditingId(todo.id)}>수정</Button>
             )}
           </StyledTodoItem>
         ))}
@@ -63,6 +63,7 @@ export default TodoList;
 const StyledTodoList = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
   gap: 10px;
 `;
 
@@ -74,6 +75,11 @@ const StyledTodoItem = styled.div`
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 10px;
+  ${({ theme }) => `
+    background-color: ${theme.background};
+    color: ${theme.color};
+    border: 1px solid ${theme.borderColor};
+  `}
 `;
 
 const StyledTodoText = styled.div`

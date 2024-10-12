@@ -23,6 +23,10 @@ const StyledInput = styled.input`
   font-size: 16px;
   &:focus {
     outline: none;
-    box-shadow: 0 0 3px #b23a48;
+    box-shadow: 0 0 3px #396fb1;
   }
+  ${({ theme }) => `
+    background-color: ${theme.background};
+    color: ${theme.color};
+  `}
 `;

@@ -13,11 +13,12 @@ export default Button;
 
 
 const Btn = styled.button`
+  min-width: 50px;
   padding: 3px 6px;
   margin-left: 7px;
   border: none;
-  border-radius: 7px;
-  background-color: #fcb9b2;
+  border-radius: 10px;
+  background-color: #99c7ef;
   color: #461220;
   font-size: 14px;
   cursor: pointer;

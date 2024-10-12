@@ -1,0 +1,21 @@
+html,
+body {
+  margin: 0px;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.App.theme-light {
+  background-color: #fff;
+}
+
+.App.theme-dark {
+  background-color: #121212;
+}
