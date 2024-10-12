@@ -1,8 +1,10 @@
-# React + Vite
+# Week2/Mission1: Todo-List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+기존 미션 수행 내용에 JS 디자인 패턴 중 Provider 패턴 적용
 
-Currently, two official plugins are available:
+- 다크 모드
+![image](https://github.com/user-attachments/assets/207fdc1c-1585-43bf-acdf-f70d6ff75c36)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 라이트 모드
+![image](https://github.com/user-attachments/assets/758b4a39-f207-4560-a06b-f95ae2a8c45a)
+
