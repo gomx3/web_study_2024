@@ -49,7 +49,10 @@ function TodoList({ todos, setTodos }) {
             {editingId === todo.id ? (
               <Button onClick={() => updateTodo(editingId, editText)}>완료</Button>
             ) : (
-              <Button onClick={() => setEditingId(todo.id)}>수정</Button>
+              <Button onClick={() => {
+                setEditingId(todo.id);
+                setEditText(todo.task);
+              }}>수정</Button>
             )}
           </StyledTodoItem>
         ))}
