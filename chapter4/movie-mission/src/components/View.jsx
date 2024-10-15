@@ -13,7 +13,7 @@ const View = ({movies}) => {
                 src={`${IMAGE_BASE_URL}${movie.poster_path}`} 
                 alt={movie.title}
               />
-              <HoverOverlay></HoverOverlay>
+              <HoverOverlay/>
               <MovieTitle>{movie.title}</MovieTitle>
               <MovieDate>{movie.release_date}</MovieDate>
             </MovieLink>
@@ -41,6 +41,7 @@ const MovieList = styled.div`
 `
 const MovieLink = styled(Link)`
   position: relative;
+  text-decoration: none;
 `
 const MoviePoster = styled.img`
   width: 100%;
