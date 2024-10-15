@@ -22,7 +22,8 @@ class Welcome **extends React.Component** {
 
  모든 컴포넌트는 여러 종류의 **‘생명 주기 메소드(Life-Cycle Method)’**를 가지며, 이 메소드를 **오버라이딩**하여 특정 시점에 코드가 실행되도록 설정할 수 있다.
 
-![컴포넌트의 생명 주기](image.png)
+![컴포넌트의 생명 주기](https://github.com/user-attachments/assets/73082fbd-5cab-4831-904f-4a124b2ca877)
+
 
 컴포넌트의 생명 주기
 

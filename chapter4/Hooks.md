@@ -9,7 +9,7 @@
     
      컴포넌트가 mount/unmount/update 됐을 때 특정 작업을 처리할 수 있습니다. 클래스형 컴포넌트에서 사용하는 **생명 주기 메소드**를 함수형 컴포넌트에서 사용하는 것입니다.
     
-    [React.Component]
+    [\[React.Component\]](https://github.com/gomx3/web_study_2024/blob/main/chapter4/React-Component.md)
     
     ```jsx
     useEffect(func, deps)
