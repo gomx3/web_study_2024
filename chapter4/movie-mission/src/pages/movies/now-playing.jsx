@@ -2,25 +2,32 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import View from "../../components/View";
-import { axiosInstance } from "../../apis/axios-instance";
+import useCustomFetch from "../../hooks/useCustomFetch";
 
 const NowPlaying = () => {
-  const [movies, setMovies] = useState([]);
+  const { data, isLoading, isError } = useCustomFetch(
+    `/movie/now_playing?language=ko-KR&page=1`
+  );
 
-  useEffect(() => {
-    const getMovies = async () => {
-      const movies = await axiosInstance.get(
-        `/movie/now_playing?language=ko-KR&page=1`
-      );
-      setMovies(movies);
-    };
-    getMovies();
-  }, []);
+  if (isLoading) {
+    return (
+      <Container>
+        <h1 style={{ color: "white" }}>로딩 중 입니다...</h1>
+      </Container>
+    );
+  }
+  if (isError) {
+    return (
+      <Container>
+        <h1 style={{ color: "white" }}>에러 발생...</h1>
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <TextBox>현재 상영 중인 작품</TextBox>
-      <View movies={movies} />
+      <View movies={data} />
     </Container>
   );
 };
