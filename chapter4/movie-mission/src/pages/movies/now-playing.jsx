@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 
 import View from '../../components/View';
-
-const BASE_URL = import.meta.env.VITE_MOVIE_API_URL;
-const URL = `${BASE_URL}/movie/now_playing?language=ko-KR&page=1`
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+import { axiosInstance } from "../../apis/axios-instance";
 
 const NowPlaying = () => {
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
         const getMovies = async () => {
-            const movies = await axios.get(URL, {
-                headers: {
-                    Authorization: `Bearer ${VITE_API_KEY}`
-                }
-            })
+            const movies = await axiosInstance.get(`/movie/now_playing?language=ko-KR&page=1`)
             setMovies(movies);
         }
         getMovies()

@@ -6,8 +6,8 @@ const Navbar = () => {
         <Container>
             <LogoLink to={'/'}>GOMCHA</LogoLink>
             <AuthSection>
-                <ButtonLink to={'/login'}>로그인</ButtonLink>
-                <ButtonLink to={'/signup'}>회원가입</ButtonLink>
+                <ButtonLink to={'/login'} className="login">로그인</ButtonLink>
+                <ButtonLink to={'/signup'} className="signup">회원가입</ButtonLink>
             </AuthSection>
         </Container>
     );
@@ -45,14 +45,24 @@ const ButtonLink = styled(Link)`
     height: 25px;
     padding: 7px 10px;
     margin-left: 10px;
-    background-color: #121212;
     color: white;
     border: none;
     border-radius: 10px;
     text-decoration: none;
     font-size: 15px;
-    transition: background-color 0.3s ease;
-    &:hover {
+
+    &.login {
+        background-color: #121212;
+        transition: background-color 0.3s ease;
+        &:hover {
+            background-color: #FF007C;
+        }
+    }
+    &.signup {
         background-color: #FF007C;
+        transition: color 0.3s ease;
+        &:hover {
+            color: black;
+        }   
     }
 `

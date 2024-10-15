@@ -56,6 +56,7 @@ const CateList = styled.div`
 const CateLink = styled(Link)`
     position: relative;
     padding: 7px 10px;
+    min-width: 100px;
     background-color: #121212;
     color: white;
     border: none;
