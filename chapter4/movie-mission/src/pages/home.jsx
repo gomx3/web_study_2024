@@ -4,7 +4,9 @@ import styled from "styled-components";
 
 import View from '../components/View';
 
-const BASE_URL = `https://api.themoviedb.org/3/account/21559023/favorite/movies?language=ko-KR&page=1&sort_by=created_at.asc`
+const USER_ID = import.meta.env.USER_ID;
+const BASE_URL = import.meta.env.VITE_MOVIE_API_URL;
+const URL = `${BASE_URL}/account/${USER_ID}/favorite/movies?language=ko-KR&page=1&sort_by=created_at.asc`
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
 const HomePage = () => {
@@ -12,9 +14,9 @@ const HomePage = () => {
 
     useEffect(() => {
         const getMovies = async () => {
-            const movies = await axios.get(BASE_URL, {
+            const movies = await axios.get(URL, {
                 headers: {
-                    Authorization: VITE_API_KEY
+                    Authorization: `Bearer ${VITE_API_KEY}`
                 }
             })
             setMovies(movies);

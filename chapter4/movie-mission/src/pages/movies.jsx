@@ -7,15 +7,6 @@ const MoviesPage = () => {
     const kuchipatchi = 'https://tamagotchi-official.com/tamagotchi/jp/character/2024/05/08/4frKfEULjB2o2oXS/05_%E3%81%8F%E3%81%A1%E3%81%B1%E3%81%A3%E3%81%A1.png';
     const mimitchi = 'https://tamagotchi-official.com/tamagotchi/jp/character/2024/05/08/oCksBD3WOHDqQSTl/06_%E3%81%BF%E3%81%BF%E3%81%A3%E3%81%A1.png';
     const flowertchi = 'https://tamagotchi-official.com/tamagotchi/jp/character/2024/05/08/fIMTsvU4u8L5a2lA/09_%E3%81%B5%E3%82%89%E3%82%8F%E3%81%A3%E3%81%A1.png';
-    
-    const images = [mametchi, kuchipatchi, mimitchi, flowertchi];
-
-    useEffect(() => {
-        images.forEach((src) => {
-            const img = new Image(); // 이미지 preload
-            img.src = src;
-        });
-    }, [images]);
 
     return (
         <Container>

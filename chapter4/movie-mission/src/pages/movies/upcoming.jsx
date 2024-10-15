@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 import View from '../../components/View';
 
-const BASE_URL = `https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1`
+const BASE_URL = import.meta.env.VITE_MOVIE_API_URL;
+const URL = `${BASE_URL}/movie/upcoming?language=ko-KR&page=1`
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
 const UpComing = () => {
@@ -12,9 +13,9 @@ const UpComing = () => {
 
     useEffect(() => {
         const getMovies = async () => {
-            const movies = await axios.get(BASE_URL, {
+            const movies = await axios.get(URL, {
                 headers: {
-                    Authorization: VITE_API_KEY
+                    Authorization: `Bearer ${VITE_API_KEY}`
                 }
             })
             setMovies(movies);
