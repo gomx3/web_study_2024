@@ -1,40 +1,42 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import View from '../../components/View';
+import View from "../../components/View";
 import { axiosInstance } from "../../apis/axios-instance";
 
 const NowPlaying = () => {
-    const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState([]);
 
-    useEffect(() => {
-        const getMovies = async () => {
-            const movies = await axiosInstance.get(`/movie/now_playing?language=ko-KR&page=1`)
-            setMovies(movies);
-        }
-        getMovies()
-    }, []);
+  useEffect(() => {
+    const getMovies = async () => {
+      const movies = await axiosInstance.get(
+        `/movie/now_playing?language=ko-KR&page=1`
+      );
+      setMovies(movies);
+    };
+    getMovies();
+  }, []);
 
-    return (
-        <Container>
-            <TextBox>현재 상영 중인 작품</TextBox>
-            <View movies={movies}/>
-        </Container>
-    );
+  return (
+    <Container>
+      <TextBox>현재 상영 중인 작품</TextBox>
+      <View movies={movies} />
+    </Container>
+  );
 };
 
 export default NowPlaying;
 
 const Container = styled.div`
-    position: fixed;
-    top: 97px;
-    left: 200px;
-    width: calc(100% - 200px);
-    height: calc(100vh - 97px);
-    background-color: black;
-`
+  position: fixed;
+  top: 97px;
+  left: 200px;
+  width: calc(100% - 200px);
+  height: calc(100vh - 97px);
+  background-color: black;
+`;
 const TextBox = styled.h1`
-    margin: 20px;
-    margin-bottom: -5px;
-    color: white;
-`
+  margin: 20px;
+  margin-bottom: -5px;
+  color: white;
+`;
