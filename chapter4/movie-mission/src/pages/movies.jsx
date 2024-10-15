@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -40,17 +39,16 @@ const Container = styled.div`
     position: fixed;
     top: 97px;
     left: 200px;
-    width: calc(100% - 200px);
+    width: calc(100% - 240px);
     height: calc(100vh - 97px);
+    padding: 20px;
     background-color: black;
 `
 const TextBox = styled.h1`
-    margin: 20px;
     color: white;
 `
 const CateList = styled.div`
     display: flex;
-    margin: 0 20px;
     gap: 10px;
 `
 const CateLink = styled(Link)`

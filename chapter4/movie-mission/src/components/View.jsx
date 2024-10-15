@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w400";
@@ -7,7 +8,7 @@ const View = ({movies}) => {
       <Container>
         <MovieList>
           {movies.data?.results.map((movie) => (
-            <MovieItem key={movie.id}>
+            <MovieLink to={`/movies/${movie.id}`} key={movie.id}>
               <MoviePoster 
                 src={`${IMAGE_BASE_URL}${movie.poster_path}`} 
                 alt={movie.title}
@@ -15,7 +16,7 @@ const View = ({movies}) => {
               <HoverOverlay></HoverOverlay>
               <MovieTitle>{movie.title}</MovieTitle>
               <MovieDate>{movie.release_date}</MovieDate>
-            </MovieItem>
+            </MovieLink>
           ))}
         </MovieList>
       </Container>
@@ -38,7 +39,7 @@ const MovieList = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 20px;
 `
-const MovieItem = styled.div`
+const MovieLink = styled(Link)`
   position: relative;
 `
 const MoviePoster = styled.img`
