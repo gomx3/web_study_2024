@@ -25,8 +25,7 @@ const View = ({movies}) => {
 export default View;
 
 const Container = styled.div`
-  margin: 20px;
-  height: calc(100vh - 190px);
+  height: calc(100vh - 220px);
   overflow-y: auto;
   padding-bottom: 20px;
 
