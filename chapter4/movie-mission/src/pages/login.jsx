@@ -14,8 +14,8 @@ const Container = styled.div`
     position: fixed;
     top: 97px;
     left: 200px;
-    width: 100%;
-    height: 100vh;
+    width: calc(100% - 200px);
+    height: calc(100vh - 97px);
     background-color: black;
 `
 const TextBox = styled.h1`

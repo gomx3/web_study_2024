@@ -1,4 +1,3 @@
-// import { MOVIES } from '../mocks/movies';
 import styled from 'styled-components'
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w400";
@@ -26,25 +25,26 @@ const View = ({movies}) => {
 export default View;
 
 const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
   margin: 20px;
+  height: calc(100vh - 190px);
   overflow-y: auto;
-  max-height: 100vh;
+  padding-bottom: 20px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 const MovieList = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 20px;
 `
 const MovieItem = styled.div`
   position: relative;
 `
 const MoviePoster = styled.img`
-  width: 250px;
-  height: 350px;
-  object-fit: cover;
-  display: block;
+  width: 100%;
+  aspect-ratio: 2.1 / 3;
   border-radius: 8px;
 `
 const HoverOverlay = styled.div`

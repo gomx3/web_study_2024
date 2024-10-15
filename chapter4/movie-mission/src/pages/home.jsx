@@ -7,7 +7,7 @@ import View from '../components/View';
 const BASE_URL = `https://api.themoviedb.org/3/account/21559023/favorite/movies?language=ko-KR&page=1&sort_by=created_at.asc`
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
-const MainPage = () => {
+const HomePage = () => {
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
@@ -29,13 +29,13 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default HomePage;
 
 const Container = styled.div`
     position: fixed;
     top: 97px;
     left: 200px;
-    width: 100%;
-    height: 100vh;
+    width: calc(100% - 200px);
+    height: calc(100vh - 97px);
     background-color: black;
 `

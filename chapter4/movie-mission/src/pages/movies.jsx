@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,54 +7,64 @@ const MoviesPage = () => {
     const kuchipatchi = 'https://tamagotchi-official.com/tamagotchi/jp/character/2024/05/08/4frKfEULjB2o2oXS/05_%E3%81%8F%E3%81%A1%E3%81%B1%E3%81%A3%E3%81%A1.png';
     const mimitchi = 'https://tamagotchi-official.com/tamagotchi/jp/character/2024/05/08/oCksBD3WOHDqQSTl/06_%E3%81%BF%E3%81%BF%E3%81%A3%E3%81%A1.png';
     const flowertchi = 'https://tamagotchi-official.com/tamagotchi/jp/character/2024/05/08/fIMTsvU4u8L5a2lA/09_%E3%81%B5%E3%82%89%E3%82%8F%E3%81%A3%E3%81%A1.png';
+    
+    const images = [mametchi, kuchipatchi, mimitchi, flowertchi];
+
+    useEffect(() => {
+        images.forEach((src) => {
+            const img = new Image(); // 이미지 preload
+            img.src = src;
+        });
+    }, [images]);
 
     return (
         <Container>
             <TextBox>둘러보기</TextBox>
-            <MovieList>
-                <MovieLink to={'/movies/now-playing'}>
-                    <CategoryImg src={mametchi} alt="현재 상영 중인" />
-                    <CategoryText>현재 상영 중인</CategoryText>
-                </MovieLink>
-                <MovieLink to={'/movies/popular'}>
-                    <CategoryImg src={kuchipatchi} alt="인기 있는" />
-                    <CategoryText>인기 있는</CategoryText>
-                </MovieLink>
-                <MovieLink to={'/movies/top-rated'}>
-                    <CategoryImg src={mimitchi} alt="인기 있는" />
-                    <CategoryText>높은 평가를 받은</CategoryText>
-                </MovieLink>
-                <MovieLink to={'/movies/upcoming'}>
-                    <CategoryImg src={flowertchi} alt="인기 있는" />
-                    <CategoryText>개봉 예정 중인</CategoryText>
-                </MovieLink>
-            </MovieList>
+            <CateList>
+                <CateLink to={'/movies/now-playing'}>
+                    <CateImg src={mametchi} alt="현재 상영 중인" />
+                    <CateText>현재 상영 중인</CateText>
+                </CateLink>
+                <CateLink to={'/movies/popular'}>
+                    <CateImg src={kuchipatchi} alt="인기 있는" />
+                    <CateText>인기 있는</CateText>
+                </CateLink>
+                <CateLink to={'/movies/top-rated'}>
+                    <CateImg src={mimitchi} alt="인기 있는" />
+                    <CateText>높은 평가를 받은</CateText>
+                </CateLink>
+                <CateLink to={'/movies/upcoming'}>
+                    <CateImg src={flowertchi} alt="인기 있는" />
+                    <CateText>개봉 예정 중인</CateText>
+                </CateLink>
+            </CateList>
         </Container>
     );
 };
 
 export default MoviesPage;
 
+
 const Container = styled.div`
     position: fixed;
     top: 97px;
     left: 200px;
-    width: 100%;
-    height: 100vh;
+    width: calc(100% - 200px);
+    height: calc(100vh - 97px);
     background-color: black;
 `
 const TextBox = styled.h1`
     margin: 20px;
     color: white;
 `
-const MovieList = styled.div`
+const CateList = styled.div`
     display: flex;
-    margin-left: 20px;
+    margin: 0 20px;
+    gap: 10px;
 `
-const MovieLink = styled(Link)`
+const CateLink = styled(Link)`
     position: relative;
     padding: 7px 10px;
-    margin-left: 10px;
     background-color: #121212;
     color: white;
     border: none;
@@ -66,11 +77,13 @@ const MovieLink = styled(Link)`
         background-color: #FF007C;
     }
 `
-const CategoryImg = styled.img`
-    width: 250px;
+const CateImg = styled.img`
+    width: 100%;
+    max-width: 250px;
+    aspect-ratio: 1 / 1;
     border-radius: 10px;
 `
-const CategoryText = styled.div`
+const CateText = styled.div`
     position: absolute;
     bottom: 15px;
     color: white;

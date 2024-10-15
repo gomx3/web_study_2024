@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import MainPage from './pages/main';
+import HomePage from './pages/home';
 import MoviesPage from './pages/movies';
 import SearchPage from './pages/search';
 import LoginPage from './pages/login';
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainPage/>
+        element: <HomePage/>
       },
       {
         path: 'search',
