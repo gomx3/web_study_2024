@@ -6,7 +6,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Credits = ({ movieId }) => {
   const { data, isLoading, isError } = useCustomFetch(
-    `/movie/569094/credits?language=ko-KR`
+    `/movie/${movieId}/credits?language=ko-KR`
   );
 
   return (
@@ -32,7 +32,7 @@ const Credits = ({ movieId }) => {
 export default Credits;
 
 const Container = styled.div`
-  height: 280px;
+  height: 300px;
   margin-top: 50px;
   overflow-y: auto;
   &::-webkit-scrollbar {
@@ -42,7 +42,7 @@ const Container = styled.div`
 const CastList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-  gap: 7px;
+  gap: 10px;
 `;
 const CastItem = styled.div`
   display: flex;
@@ -51,12 +51,13 @@ const CastItem = styled.div`
   text-align: center;
   width: 85px;
   height: auto;
+  margin-bottom: 10px;
 `;
 const ImgContainer = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 2px solid white; /* 흰색 테두리 */
+  border: 2px solid #ededed; /* 흰색 테두리 */
   display: flex;
   align-items: center;
   justify-content: center;

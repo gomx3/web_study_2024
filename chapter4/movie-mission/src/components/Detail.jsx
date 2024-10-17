@@ -17,23 +17,22 @@ const Detail = ({ movie }) => {
             src={`${IMAGE_BASE_URL}${movie.data?.poster_path}`}
             alt={movie.data?.title}
           />
-          <Overlay />
         </PosterItem>
       </LeftSection>
 
       <RightSection>
         <Title>{movie.data?.title}</Title>
 
-        <Text sytle={{ fontWeight: "thin" }}>{releaseYear}</Text>
+        <p style={{ color: "white", margin: "10px 0", fontSize: "20px" }}>
+          {releaseYear}
+        </p>
         <SmallText>
-          장르: {movie.data?.genres.map((genre) => genre.name).join(" ")}
-        </SmallText>
-        <SmallText>{movie.data?.runtime}분</SmallText>
-        <SmallText>
+          {movie.data?.runtime}분<br />
+          장르: {movie.data?.genres.map((genre) => genre.name).join(", ")}<br />
           평점: {movie.data?.vote_average} ({movie.data?.vote_count})
         </SmallText>
 
-        <Text>{movie.data?.tagline}</Text>
+        <Tagline>{movie.data?.tagline}</Tagline>
         <MovieOverview movie={movie} />
 
         <Credits movieId={movie.data?.id} />
@@ -54,12 +53,13 @@ const Container = styled.div`
 const LeftSection = styled.div`
   display: flex;
   justify-content: center;
-  width: 35%;
+  width: 25%;
+  max-width: 500px;
 `;
 const RightSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 70%;
 `;
 const PosterItem = styled.div`
   position: relative;
@@ -69,43 +69,22 @@ const PosterItem = styled.div`
 
 const PosterImg = styled.img`
   width: 100%;
+  height: auto;
   transition: transform 0.3s ease;
   border-radius: 10px;
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0) 35%,
-    rgba(0, 0, 0, 0) 65%,
-    rgba(0, 0, 0, 1)
-  );
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-  &:hover {
-    opacity: 0;
-  }
 `;
 const Title = styled.h1`
   margin: 0px;
   color: #fff;
 `;
-// const Overview = styled.p`
-//   font-size: 15px;
-//   line-height: 1.5;
-//   color: #fff;
-// `;
-const Text = styled.div`
+const Tagline = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: #fff;
-  margin: 10px 0;
+  margin-top: 10px;
 `;
 const SmallText = styled.div`
   font-size: 13px;
   color: gray;
-  margin-bottom: 3px;
+  margin: 10px 0 ;
 `;
