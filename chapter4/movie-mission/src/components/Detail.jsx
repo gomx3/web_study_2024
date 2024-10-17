@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
+import MovieOverview from "./MovieOverview";
+import Credits from "./Credits";
+
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Detail = ({ movie }) => {
   console.log(movie);
+  const releaseYear = movie.data?.release_date.split("-")[0];
 
   return (
     <Container>
@@ -19,7 +23,20 @@ const Detail = ({ movie }) => {
 
       <RightSection>
         <Title>{movie.data?.title}</Title>
-        <Overview>{movie.data?.overview}</Overview>
+
+        <Text sytle={{ fontWeight: "thin" }}>{releaseYear}</Text>
+        <SmallText>
+          장르: {movie.data?.genres.map((genre) => genre.name).join(" ")}
+        </SmallText>
+        <SmallText>{movie.data?.runtime}분</SmallText>
+        <SmallText>
+          평점: {movie.data?.vote_average} ({movie.data?.vote_count})
+        </SmallText>
+
+        <Text>{movie.data?.tagline}</Text>
+        <MovieOverview movie={movie} />
+
+        <Credits movieId={movie.data?.id} />
       </RightSection>
     </Container>
   );
@@ -48,28 +65,23 @@ const PosterItem = styled.div`
   position: relative;
   width: 100%;
   border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
 `;
 
 const PosterImg = styled.img`
   width: 100%;
   transition: transform 0.3s ease;
-  &:hover {
-    transform: scale(1.05);
-  }
-    border-radius: 10px;
+  border-radius: 10px;
 `;
 
 const Overlay = styled.div`
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to bottom, 
-    rgba(0, 0, 0, 0.7), /* 위쪽 그라데이션 */
-    rgba(0, 0, 0, 0) 30%, /* 중앙 투명 */
-    rgba(0, 0, 0, 0) 70%, /* 중앙 투명 */
-    rgba(0, 0, 0, 0.7) /* 아래쪽 그라데이션 */
+    to bottom,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0) 35%,
+    rgba(0, 0, 0, 0) 65%,
+    rgba(0, 0, 0, 1)
   );
   opacity: 0.8;
   transition: opacity 0.3s ease;
@@ -78,11 +90,22 @@ const Overlay = styled.div`
   }
 `;
 const Title = styled.h1`
-  margin-bottom: 10px;
+  margin: 0px;
   color: #fff;
 `;
-const Overview = styled.p`
-  font-size: 16px;
-  line-height: 1.5;
+// const Overview = styled.p`
+//   font-size: 15px;
+//   line-height: 1.5;
+//   color: #fff;
+// `;
+const Text = styled.div`
+  font-size: 20px;
+  font-weight: bold;
   color: #fff;
+  margin: 10px 0;
+`;
+const SmallText = styled.div`
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 3px;
 `;
