@@ -18,7 +18,7 @@ const Container = styled.div`
   height: calc(100vh - 97px);
   padding: 20px;
   background-color: black;
-`
+`;
 const TextBox = styled.h1`
   color: white;
-`
+`;

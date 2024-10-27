@@ -1,34 +1,15 @@
-import { useState } from "react";
 import styled from "styled-components";
+import useForm from "../hooks/useForm.js";
+import { validateLogin } from "../utils/validate.js";
 
 const LoginPage = () => {
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
-  })
-  const [touched, setTouched] = useState({
-    email: false,
-    password: false,
-  })
-
-  console.log(touched);
-  const [errors, setErrors] = useState({
-    email: false,
-    password: false,
-  })
-
-  const handleChangeInput = (name, value) => {
-    setValues({
-      ...values,
-      [name]: value
-    });
-  }
-  const handleBlur = (name) => {
-    setTouched({
-      ...touched,
-      [name]: true
-    });
-  }
+  const login = useForm(
+    {
+      email: "",
+      password: "",
+    },
+    validateLogin
+  );
 
   return (
     <Container>
@@ -37,21 +18,27 @@ const LoginPage = () => {
 
         <InputBox>
           <StyledInput
+            error={login.touched.email && login.errors.email}
             type={"email"}
-            value={values.email}
-            onBlur={() => handleBlur('email')}
-            onChange={(e) => handleChangeInput('email', e.target.value)}
             placeholder="이메일을 입력해주세요!"
+            {...login.getTextInputProps("email")}
           />
+          {login.touched.email && login.errors.email && (
+            <StyledErrorMsg>{login.errors.email}</StyledErrorMsg>
+          )}
 
           <StyledInput
+            error={login.touched.password && login.errors.password}
             type={"password"}
-            value={values.password}
-            onBlur={() => handleBlur('password')}
-            onChange={(e) => handleChangeInput('password', e.target.value)}
             placeholder="비밀번호를 입력해주세요!"
+            {...login.getTextInputProps("password")}
           />
-          <LoginBtn type="submit">로그인</LoginBtn>
+          {login.touched.password && login.errors.password && (
+            <StyledErrorMsg>{login.errors.password}</StyledErrorMsg>
+          )}
+          
+          <LoginBtn type="submit" disabled={login.errors.email || login.errors.password}>로그인</LoginBtn>
+        
         </InputBox>
       </LoginSection>
     </Container>
@@ -92,6 +79,7 @@ const StyledInput = styled.input`
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
+  border: ${(props) => (props.error ? "2px solid red" : "1px solid #ccc")}
 `;
 const StyledErrorMsg = styled.p`
   margin: 0 10px;
@@ -109,7 +97,9 @@ const LoginBtn = styled.button`
   &:disabled {
     background-color: #ccc;
     color: #fff;
-    &:hover { color: #fff; }
+    &:hover {
+      color: #fff;
+    }
   }
   &:hover {
     color: black;
