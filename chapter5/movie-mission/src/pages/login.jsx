@@ -30,12 +30,14 @@ const LoginPage = () => {
     formState: { errors, touchedFields, isValid },
     trigger,
     watch,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
     console.log(data);
+    reset();
   };
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const LoginPage = () => {
 
   return (
     <Container>
-      <LoginSection>
+      <Wrapper>
         <TitleBox>로그인</TitleBox>
 
         <InputBox onSubmit={handleSubmit(onSubmit)}>
@@ -64,9 +66,9 @@ const LoginPage = () => {
             error={errors.password?.message}
           />
 
-          <LoginBtn disabled={!isValid}>로그인</LoginBtn>
+          <Btn disabled={!isValid}>로그인</Btn>
         </InputBox>
-      </LoginSection>
+      </Wrapper>
     </Container>
   );
 };
@@ -84,7 +86,7 @@ const Container = styled.div`
   height: calc(100vh - 97px);
   background-color: black;
 `;
-const LoginSection = styled.div`
+const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -101,7 +103,7 @@ const InputBox = styled.form`
   flex-direction: column;
   width: 330px;
 `;
-const LoginBtn = styled.button`
+const Btn = styled.button`
   padding: 10px;
   margin: 5px;
   border: none;

@@ -34,12 +34,14 @@ const SignupPage = () => {
     formState: { errors, touchedFields, isValid },
     trigger,
     watch,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
     console.log(data);
+    reset();
   };
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const SignupPage = () => {
 
   return (
     <Container>
-      <LoginSection>
+      <Wrapper>
         <TitleBox>회원 가입</TitleBox>
 
         <InputBox onSubmit={handleSubmit(onSubmit)}>
@@ -69,15 +71,15 @@ const SignupPage = () => {
             error={errors.password?.message}
           />
           <Inputs
-            type="passwordCheck"
+            type="password"
             register={register("passwordCheck")}
             placeholder="비밀번호를 다시 입력해주세요!"
             touched={touchedFields.passwordCheck}
             error={errors.passwordCheck?.message}
           />
-          <LoginBtn disabled={!isValid}>제출</LoginBtn>
+          <Btn disabled={!isValid}>제출</Btn>
         </InputBox>
-      </LoginSection>
+      </Wrapper>
     </Container>
   );
 };
@@ -95,7 +97,7 @@ const Container = styled.div`
   height: calc(100vh - 97px);
   background-color: black;
 `;
-const LoginSection = styled.div`
+const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -112,7 +114,7 @@ const InputBox = styled.form`
   flex-direction: column;
   width: 330px;
 `;
-const LoginBtn = styled.button`
+const Btn = styled.button`
   padding: 10px;
   margin: 5px;
   border: none;

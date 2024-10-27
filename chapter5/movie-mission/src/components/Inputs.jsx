@@ -3,7 +3,11 @@ import styled from "styled-components";
 const Inputs = ({ type, register, placeholder, touched, error }) => {
   return (
     <>
-      <StyledInput type={type} {...register} placeholder={placeholder} />
+      <StyledInput
+        type={type}
+        {...register}
+        placeholder={placeholder}
+      />
       {touched && <StyledErrorMsg>{error}</StyledErrorMsg>}
     </>
   );
