@@ -1,32 +1,81 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
+import Inputs from "../components/Inputs";
+
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const SignupPage = () => {
   const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).max(18).required(),
-    passwordCheck: yup.string().min(6).max(18).required(),
+    email: yup
+      .string()
+      .email("올바른 이메일 형식이 아닙니다. 다시 확인해주세요!")
+      .matches(
+        emailPattern,
+        "올바른 이메일 형식이 아닙니다. 다시 확인해주세요!"
+      )
+      .required(),
+    password: yup
+      .string()
+      .min(6, "비밀번호는 6~18자 사이로 입력해주세요!")
+      .max(18, "비밀번호는 6~18자 사이로 입력해주세요!")
+      .required(),
+    passwordCheck: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다.")
+      .required("비밀번호가 일치하지 않습니다."),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, touchedFields, isValid },
+    trigger,
+    watch,
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    console.log("회원 가입 시도");
     console.log(data);
   };
+
+  useEffect(() => {
+    trigger("email");
+    trigger("password");
+    trigger("passwordCheck");
+  }, [watch("email"), watch("password"), watch("passwordCheck"), trigger]);
 
   return (
     <Container>
       <LoginSection>
         <TitleBox>회원 가입</TitleBox>
 
-        <InputBox>
-          <StyledInput type="email" placeholder="이메일을 입력해주세요!" />
-          <StyledInput type="password" placeholder="비밀번호를 입력해주세요!" />
-          <StyledInput
-            type="passwordCheck"
-            placeholder="비밀번호를 다시 입력해주세요!"
+        <InputBox onSubmit={handleSubmit(onSubmit)}>
+          <Inputs
+            type="email"
+            register={register("email")}
+            placeholder="이메일을 입력해주세요!"
+            touched={touchedFields.email}
+            error={errors.email?.message}
           />
-          <LoginBtn>제출</LoginBtn>
+          <Inputs
+            type="password"
+            register={register("password")}
+            placeholder="비밀번호를 입력해주세요!"
+            touched={touchedFields.password}
+            error={errors.password?.message}
+          />
+          <Inputs
+            type="passwordCheck"
+            register={register("passwordCheck")}
+            placeholder="비밀번호를 다시 입력해주세요!"
+            touched={touchedFields.passwordCheck}
+            error={errors.passwordCheck?.message}
+          />
+          <LoginBtn disabled={!isValid}>제출</LoginBtn>
         </InputBox>
       </LoginSection>
     </Container>
@@ -58,15 +107,10 @@ const TitleBox = styled.h1`
   color: white;
   margin: 0 0 10px 0;
 `;
-const InputBox = styled.div`
+const InputBox = styled.form`
   display: flex;
   flex-direction: column;
   width: 330px;
-`;
-const StyledInput = styled.input`
-  padding: 10px;
-  margin: 5px;
-  border-radius: 10px;
 `;
 const LoginBtn = styled.button`
   padding: 10px;
@@ -76,6 +120,13 @@ const LoginBtn = styled.button`
   color: #fff;
   background-color: #ff007c;
   transition: color 0.3s ease;
+  &:disabled {
+    background-color: #ccc;
+    color: #fff;
+    &:hover {
+      color: #fff;
+    }
+  }
   &:hover {
     color: black;
   }

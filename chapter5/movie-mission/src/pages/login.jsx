@@ -38,7 +38,6 @@ const LoginPage = () => {
     console.log(data);
   };
 
-  // 입력 값이 변경될 때마다 실시간으로 email/password 필드의 유효성 검사를 진행
   useEffect(() => {
     trigger("email");
     trigger("password");
