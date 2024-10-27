@@ -1,4 +1,5 @@
 # 실습 1: 로그인 페이지 유효성 검사 구현
+- `react-hook-form`과 `yup` 라이브러리 활용
 
 ![image](https://github.com/user-attachments/assets/05c98f18-81ba-4789-9893-81a98553b243)
 

@@ -1,6 +1,19 @@
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import styled from "styled-components";
 
 const SignupPage = () => {
+  const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(6).max(18).required(),
+    passwordCheck: yup.string().min(6).max(18).required(),
+  });
+
+  const onSubmit = (data) => {
+    console.log("회원 가입 시도");
+    console.log(data);
+  };
+
   return (
     <Container>
       <LoginSection>
@@ -9,7 +22,10 @@ const SignupPage = () => {
         <InputBox>
           <StyledInput type="email" placeholder="이메일을 입력해주세요!" />
           <StyledInput type="password" placeholder="비밀번호를 입력해주세요!" />
-          <StyledInput type="password" placeholder="비밀번호를 다시 입력해주세요!" />
+          <StyledInput
+            type="passwordCheck"
+            placeholder="비밀번호를 다시 입력해주세요!"
+          />
           <LoginBtn>제출</LoginBtn>
         </InputBox>
       </LoginSection>

@@ -26,7 +26,7 @@ const LoginPage = () => {
     console.log(data);
   };
 
-  // 이메일/비밀번호 입력이 조건을 충족하는지 실시간으로 확인
+  // 입력 값이 변경될 때마다 실시간으로 email/password 필드의 유효성 검사를 진행
   useEffect(() => {
     trigger("email");
     trigger("password");
