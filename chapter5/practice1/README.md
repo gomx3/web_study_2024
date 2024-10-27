@@ -1,10 +1,10 @@
 # 실습 1: 로그인 페이지 유효성 검사 구현
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/38a7c245-53d7-4f32-bc7c-6001f6e4e14c/6cf47b6e-1081-4c7a-a14a-2858b591ef69/image.png)
-    
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/38a7c245-53d7-4f32-bc7c-6001f6e4e14c/eb6fe981-47e8-400a-8e7a-14ba56113dd5/image.png)
-    
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/38a7c245-53d7-4f32-bc7c-6001f6e4e14c/2757ace7-ae5a-4e78-be32-a3ed806818e5/image.png)
+![image](https://github.com/user-attachments/assets/05c98f18-81ba-4789-9893-81a98553b243)
+
+![image](https://github.com/user-attachments/assets/6977ae4c-7a51-45f4-ab07-f5432bce4827)
+
+![image](https://github.com/user-attachments/assets/411352fe-6f78-4080-9d50-1642249f4ea4)
     
 
 ## UI
