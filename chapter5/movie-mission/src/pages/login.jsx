@@ -3,12 +3,19 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
+import Inputs from "../components/Inputs";
+
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LoginPage = () => {
   const schema = yup.object().shape({
     email: yup
       .string()
       .email("올바른 이메일 형식이 아닙니다. 다시 확인해주세요!")
+      .matches(
+        emailPattern,
+        "올바른 이메일 형식이 아닙니다. 다시 확인해주세요!"
+      )
       .required(),
     password: yup
       .string()
@@ -17,12 +24,17 @@ const LoginPage = () => {
       .required(),
   });
 
-  const {register, handleSubmit, formState: { errors, touchedFields, isValid }, trigger, watch} = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, touchedFields, isValid },
+    trigger,
+    watch,
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    console.log("로그인 시도");
     console.log(data);
   };
 
@@ -38,20 +50,22 @@ const LoginPage = () => {
         <TitleBox>로그인</TitleBox>
 
         <InputBox onSubmit={handleSubmit(onSubmit)}>
-          <StyledInput
-            type={"email"}
-            {...register("email")}
-            placeholder="이메일을 입력해주세요!"
+          <Inputs
+            type="email"
+            register={register("email")}
+            placeholder={"이메일을 입력해주세요!"}
+            touched={touchedFields.email}
+            error={errors.email?.message}
           />
-          <StyledErrorMsg>{touchedFields.email && errors.email?.message}</StyledErrorMsg>
+          <Inputs
+            type="password"
+            register={register("password")}
+            placeholder={"비밀번호를 입력해주세요!"}
+            touched={touchedFields.password}
+            error={errors.password?.message}
+          />
 
-          <StyledInput
-            type={"password"}
-            {...register("password")}
-            placeholder="비밀번호를 입력해주세요!"
-          />
-          <StyledErrorMsg>{touchedFields.password && errors.password?.message}</StyledErrorMsg>
-          <LoginBtn type="submit" disabled={!isValid}>로그인</LoginBtn>
+          <LoginBtn disabled={!isValid}>로그인</LoginBtn>
         </InputBox>
       </LoginSection>
     </Container>
@@ -88,16 +102,6 @@ const InputBox = styled.form`
   flex-direction: column;
   width: 330px;
 `;
-const StyledInput = styled.input`
-  padding: 10px;
-  margin: 5px;
-  border-radius: 10px;
-`;
-const StyledErrorMsg = styled.p`
-  margin: 0 10px;
-  color: red;
-  font-size: 13px;
-`;
 const LoginBtn = styled.button`
   padding: 10px;
   margin: 5px;
@@ -109,7 +113,9 @@ const LoginBtn = styled.button`
   &:disabled {
     background-color: #ccc;
     color: #fff;
-    &:hover { color: #fff; }
+    &:hover {
+      color: #fff;
+    }
   }
   &:hover {
     color: black;

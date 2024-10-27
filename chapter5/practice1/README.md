@@ -47,7 +47,7 @@ useEffect(() => {
  사용자가 상호 작용한 모든 입력을 포함하는 객체인 `touchedFields`를 이용해, email 혹은 password 필드가 사용자에 의해 포커스 되었는지에 대한 boolean 값을 확인하는 로직을 추가한다.
 
 ```jsx
-<p>{touchedFields.email && errors.email?.message}</p>
+{touchedFields.email && <p>{errors.email?.message}</p>}
 ```
 
 ### 로그인 버튼 비활성화 구현

@@ -4,11 +4,15 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 const LoginPage = () => {
+  
   const schema = yup.object().shape({
     email: yup
       .string()
       .email("올바른 이메일 형식이 아닙니다. 다시 확인해주세요!")
+      .matches(emailPattern, "올바른 이메일 형식이 아닙니다. 다시 확인해주세요!")
       .required(),
     password: yup
       .string()
@@ -43,15 +47,15 @@ const LoginPage = () => {
             {...register("email")}
             placeholder="이메일을 입력해주세요!"
           />
-          <StyledErrorMsg>{touchedFields.email && errors.email?.message}</StyledErrorMsg>
+          {touchedFields.email && <StyledErrorMsg>{errors.email?.message}</StyledErrorMsg>}
 
           <StyledInput
             type={"password"}
             {...register("password")}
             placeholder="비밀번호를 입력해주세요!"
           />
-          <StyledErrorMsg>{touchedFields.password && errors.password?.message}</StyledErrorMsg>
-          <LoginBtn type="submit" disabled={!isValid}>로그인</LoginBtn>
+          {touchedFields.password && <StyledErrorMsg>{errors.password?.message}</StyledErrorMsg>}
+          <LoginBtn disabled={!isValid}>로그인</LoginBtn>
         </InputBox>
       </LoginSection>
     </Container>

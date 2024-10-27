@@ -37,7 +37,7 @@ const LoginPage = () => {
             <StyledErrorMsg>{login.errors.password}</StyledErrorMsg>
           )}
           
-          <LoginBtn type="submit" disabled={login.errors.email || login.errors.password}>로그인</LoginBtn>
+          <LoginBtn disabled={login.errors.email || login.errors.password}>로그인</LoginBtn>
         
         </InputBox>
       </LoginSection>
