@@ -52,7 +52,7 @@ const Container = styled.div`
 const LeftSection = styled.div`
   display: flex;
   justify-content: center;
-  width: 25%;
+  width: 27%;
   max-width: 500px;
 `;
 const RightSection = styled.div`

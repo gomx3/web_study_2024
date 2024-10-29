@@ -6,9 +6,8 @@ import Credits from "./Credits";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Detail = ({ movie }) => {
-  console.log(movie);
   const releaseYear = movie.data?.release_date.split("-")[0];
-
+  
   return (
     <Container>
       <LeftSection>
@@ -44,16 +43,16 @@ const Detail = ({ movie }) => {
 export default Detail;
 
 const Container = styled.div`
+  position: static;
   display: flex;
   flex-direction: row;
-  align-item: flex-start;
   justify-content: space-between;
-  padding: 50px;
+  max-height: 100%;
 `;
 const LeftSection = styled.div`
   display: flex;
   justify-content: center;
-  width: 25%;
+  width: 27%;
   max-width: 500px;
 `;
 const RightSection = styled.div`
