@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import useForm from "../hooks/useForm.js";
-import { validateLogin } from "../utils/validate.js";
+import useForm from "../hooks/useForm";
+import { validateLogin } from "../utils/validate";
 
 const LoginPage = () => {
   const login = useForm(
@@ -13,7 +13,7 @@ const LoginPage = () => {
 
   return (
     <Container>
-      <LoginSection>
+      <Wrapper>
         <TitleBox>로그인</TitleBox>
 
         <InputBox>
@@ -37,10 +37,10 @@ const LoginPage = () => {
             <StyledErrorMsg>{login.errors.password}</StyledErrorMsg>
           )}
           
-          <LoginBtn disabled={login.errors.email || login.errors.password}>로그인</LoginBtn>
+          <Btn disabled={login.errors.email || login.errors.password}>로그인</Btn>
         
         </InputBox>
-      </LoginSection>
+      </Wrapper>
     </Container>
   );
 };
@@ -58,7 +58,7 @@ const Container = styled.div`
   height: calc(100vh - 97px);
   background-color: black;
 `;
-const LoginSection = styled.div`
+const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -86,7 +86,7 @@ const StyledErrorMsg = styled.p`
   color: red;
   font-size: 13px;
 `;
-const LoginBtn = styled.button`
+const Btn = styled.button`
   padding: 10px;
   margin: 5px;
   border: none;
