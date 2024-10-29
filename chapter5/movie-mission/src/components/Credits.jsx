@@ -33,16 +33,17 @@ export default Credits;
 
 const Container = styled.div`
   height: 300px;
-  margin-top: 50px;
+  margin-top: 30px;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
-const CastList = styled.div`
+const CastList = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
   gap: 10px;
+  padding: 0;
 `;
 const CastItem = styled.div`
   display: flex;
