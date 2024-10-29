@@ -12,16 +12,16 @@ const MovieDetailPage = () => {
 
   if (isLoading) {
     return (
-      <Container>
+      <MsgContainer>
         <h1 style={{ color: "white" }}>로딩 중 입니다...</h1>
-      </Container>
+      </MsgContainer>
     );
   }
   if (isError) {
     return (
-      <Container>
+      <MsgContainer>
         <h1 style={{ color: "white" }}>에러 발생...</h1>
-      </Container>
+      </MsgContainer>
     );
   }
 
@@ -34,15 +34,28 @@ const MovieDetailPage = () => {
 
 export default MovieDetailPage;
 
-const Container = styled.div`
+const MsgContainer = styled.div`
   position: fixed;
   top: 97px;
   left: 200px;
-  width: calc(100% - 220px);
-  height: calc(100vh - 97px);
+  bottom: 0px;
+  width: calc(100% - 200px);
+  height: calc(100% - 97px);
   background-color: black;
-  padding: 40px 10px;
+  box-sizing: border-box;
+  padding: 20px 35px;
 `;
-const TextBox = styled.h1`
-  color: white;
+
+const Container = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 97px;
+  left: 200px;
+  bottom: 0px;
+  width: calc(100% - 200px);
+  height: calc(100% - 97px);
+  background-color: black;
+  box-sizing: border-box;
+  padding: 50px;
 `;
