@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <input type="text" id="inputName" placeholder="이름을 입력하세요."/>
+    
+    <script>
+	    let alertTimer;
+	    
+	    function alertWhenTypingStops() {
+		    if (alertTimer) {
+			    clearTimeout(alertTimer);
+		    }
+		    const name = nameElement.value;
+		    alertTimer = setTimeout(() => console.log(`입력된 이름: ${name}`), 1000)
+	    }
+
+      const nameElement = document.getElementById("inputName");
+      nameElement.addEventListener("input", alertWhenTypingStops);
+    </script>
+    
+  </body>
+</html>
