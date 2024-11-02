@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-function Input({ value, task, onChange, placeholder='' }) {
+function Input({ className, value, task, onChange, placeholder = "" }) {
   return (
     <StyledInput
-      value={value} 
+      className={className}
+      value={value}
       defaultValue={task}
       onChange={onChange}
       placeholder={placeholder}
@@ -14,15 +15,18 @@ function Input({ value, task, onChange, placeholder='' }) {
 
 export default Input;
 
-
 const StyledInput = styled.input`
   flex-grow: 1;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 13px;
   font-size: 16px;
   &:focus {
     outline: none;
-    box-shadow: 0 0 3px #b23a48;
+    box-shadow: 0 0 5px #bdaf9d;
   }
+  background-color: ${(props) =>
+    props.className === "dark" ? "#212426" : "#fff"};
+  color: ${(props) => 
+    props.className === "dark" ? "#fff" : "#000"};
 `;

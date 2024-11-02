@@ -11,17 +11,16 @@ function Button({ children, onClick }) {
 
 export default Button;
 
-
 const Btn = styled.button`
-  padding: 3px 6px;
-  margin-left: 7px;
+  padding: 4px 6px;
+  margin-left: 5px;
   border: none;
-  border-radius: 7px;
-  background-color: #fcb9b2;
+  border-radius: 12px;
+  background-color: #fea24d;
   color: #461220;
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    background-color: #aaaaaa;
+    color: white;
   }
 `;
