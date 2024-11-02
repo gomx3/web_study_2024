@@ -74,7 +74,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 97vh;
 
   background-color: ${(props) =>
     props.className === "dark" ? "#212426" : "#fff"};
