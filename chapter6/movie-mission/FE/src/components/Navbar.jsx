@@ -1,17 +1,74 @@
+import { useEffect, useState } from "react";
+import { LuLoader } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Navbar = () => {
+  const [name, setName] = useState('');
+
+  const getUserName = () => {
+    if (isValid) {
+
+      fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        localStorage.setItem('refreshToken', data.refreshToken)
+        localStorage.setItem('accessToekn', data.accessToken)
+        console.log('Success:', data);
+        alert('로그인 성공');
+
+        navigate('/');
+        window.location.reload(); // 새로고침 해야 이름이 변경 됨
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('로그인에 실패했습니다. 다시 시도해 주세요.');
+      });
+    }
+  }
+
+  useEffect(() => {
+    const storedName = localStorage.getItem('name');
+    if (storedName) {
+      setName(storedName);
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('name');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken');
+    setName('');
+  }
+
   return (
     <Container>
       <LogoLink to={"/"}>GOMCHA</LogoLink>
       <AuthSection>
-        <ButtonLink to={"/login"} className="login">
+        {name ? (<>
+          <p style={{ color: "#aeaeae", fontFamily: "Roboto" }}>{name} 님 반갑습니다!</p>
+          <ButtonLink to={"/"} className="login" onClick={handleLogout}>
+          로그아웃
+          </ButtonLink>
+        </>) : (<>
+          <ButtonLink to={"/login"} className="login">
           로그인
-        </ButtonLink>
-        <ButtonLink to={"/signup"} className="signup">
+          </ButtonLink>
+          <ButtonLink to={"/signup"} className="signup">
           회원가입
-        </ButtonLink>
+          </ButtonLink>
+        </>)}
       </AuthSection>
     </Container>
   );

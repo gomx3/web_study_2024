@@ -4,10 +4,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import Inputs from "../components/Inputs";
+import { useNavigate } from "react-router-dom";
 
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -28,19 +30,40 @@ const SignupPage = () => {
       .required("비밀번호가 일치하지 않습니다."),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, touchedFields, isValid },
-    trigger,
-    watch,
-    reset,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, formState: { errors, touchedFields, isValid },
+          trigger, watch, reset, } = useForm({ resolver: yupResolver(schema), });
 
   const onSubmit = (data) => {
-    console.log(data);
+    if (isValid) {
+      const userData = {
+        email: data.email,
+        password: data.password,
+        passwordCheck: data.passwordCheck,
+      };
+
+      fetch('http://localhost:3000/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success:', data);
+        alert('회원가입 성공');
+        navigate('/login');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('회원가입에 실패했습니다. 다시 시도해 주세요.');
+      });
+    }
     reset();
   };
 
@@ -55,7 +78,7 @@ const SignupPage = () => {
       <Wrapper>
         <TitleBox>회원 가입</TitleBox>
 
-        <InputBox onSubmit={handleSubmit(onSubmit)}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <Inputs
             type="email"
             register={register("email")}
@@ -78,7 +101,7 @@ const SignupPage = () => {
             error={errors.passwordCheck?.message}
           />
           <Btn disabled={!isValid}>제출</Btn>
-        </InputBox>
+        </StyledForm>
       </Wrapper>
     </Container>
   );
@@ -109,7 +132,7 @@ const TitleBox = styled.h1`
   color: white;
   margin: 0 0 10px 0;
 `;
-const InputBox = styled.form`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 330px;

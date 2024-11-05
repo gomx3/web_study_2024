@@ -4,10 +4,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import Inputs from "../components/Inputs";
+import { useNavigate } from "react-router-dom";
 
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -24,19 +27,43 @@ const LoginPage = () => {
       .required(),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, touchedFields, isValid },
-    trigger,
-    watch,
-    reset,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, formState: { errors, touchedFields, isValid },
+          trigger, watch, reset, } = useForm({ resolver: yupResolver(schema), });
 
   const onSubmit = (data) => {
-    console.log(data);
+    if (isValid) {
+      const userData = {
+        email: data.email,
+        password: data.password,
+      };
+
+      fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        localStorage.setItem('refreshToken', data.refreshToken)
+        localStorage.setItem('accessToekn', data.accessToken)
+        console.log('Success:', data);
+        alert('로그인 성공');
+
+        navigate('/');
+        window.location.reload(); // 새로고침 해야 이름이 변경 됨
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('로그인에 실패했습니다. 다시 시도해 주세요.');
+      });
+    }
     reset();
   };
 
@@ -50,7 +77,7 @@ const LoginPage = () => {
       <Wrapper>
         <TitleBox>로그인</TitleBox>
 
-        <InputBox onSubmit={handleSubmit(onSubmit)}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <Inputs
             type="email"
             register={register("email")}
@@ -67,7 +94,7 @@ const LoginPage = () => {
           />
 
           <Btn disabled={!isValid}>로그인</Btn>
-        </InputBox>
+        </StyledForm>
       </Wrapper>
     </Container>
   );
@@ -98,7 +125,7 @@ const TitleBox = styled.h1`
   color: white;
   margin: 0 0 10px 0;
 `;
-const InputBox = styled.form`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 330px;
