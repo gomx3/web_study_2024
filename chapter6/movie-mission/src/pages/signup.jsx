@@ -41,28 +41,28 @@ const SignupPage = () => {
         passwordCheck: data.passwordCheck,
       };
 
-      fetch('http://localhost:3000/auth/register', {
-        method: 'POST',
+      fetch("http://localhost:3000/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Success:', data);
-        alert('회원가입 성공');
-        navigate('/login');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('회원가입에 실패했습니다. 다시 시도해 주세요.');
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Success:", data);
+          alert("회원가입 성공");
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("회원가입에 실패했습니다. 다시 시도해 주세요.");
+        });
     }
     reset();
   };

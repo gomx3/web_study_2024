@@ -10,7 +10,7 @@ const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -37,32 +37,32 @@ const LoginPage = () => {
         password: data.password,
       };
 
-      fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
+      fetch("http://localhost:3000/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        localStorage.setItem('refreshToken', data.refreshToken)
-        localStorage.setItem('accessToekn', data.accessToken)
-        console.log('Success:', data);
-        alert('로그인 성공');
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          localStorage.setItem("refreshToken", data.refreshToken);
+          localStorage.setItem("accessToekn", data.accessToken);
+          console.log("Success:", data);
+          alert("로그인 성공");
 
-        navigate('/');
-        window.location.reload(); // 새로고침 해야 이름이 변경 됨
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('로그인에 실패했습니다. 다시 시도해 주세요.');
-      });
+          navigate("/");
+          window.location.reload(); // 새로고침 해야 이름이 변경 됨
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("로그인에 실패했습니다. 다시 시도해 주세요.");
+        });
     }
     reset();
   };
