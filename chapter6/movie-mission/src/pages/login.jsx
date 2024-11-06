@@ -52,12 +52,12 @@ const LoginPage = () => {
         })
         .then((data) => {
           localStorage.setItem("refreshToken", data.refreshToken);
-          localStorage.setItem("accessToekn", data.accessToken);
+          localStorage.setItem("accessToken", data.accessToken);
           console.log("Success:", data);
           alert("로그인 성공");
 
           navigate("/");
-          window.location.reload(); // 새로고침 해야 이름이 변경 됨
+          window.location.reload();
         })
         .catch((error) => {
           console.error("Error:", error);
