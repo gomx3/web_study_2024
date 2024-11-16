@@ -51,7 +51,7 @@ const SearchPage = () => {
         <Btn onClick={handleSearch}>검색</Btn>
       </InputWrapper>
       {query && !isMovieExists ? (
-        <p style={{ color: "white" }}>검색어 '{query}'에 대한 검색 결과가 없습니다.</p>
+        <p style={{ color: "white" }}>'{query}'에 대한 검색 결과가 없습니다.</p>
       ) : (
         <View movies={data} />
       )}
@@ -85,6 +85,7 @@ const StyledInput = styled.input`
   font-size: 15px;
 `;
 const Btn = styled.button`
+  margin-left: 10px;
   padding: 10px;
   width: 70px;
   color: white;

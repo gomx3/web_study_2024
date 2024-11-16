@@ -25,6 +25,12 @@ const Navbar = () => {
 
       const nameFromEmail = data.email.substring(0, data.email.indexOf('@'));
       localStorage.setItem("name", nameFromEmail);
+      
+      // 새로고침이 이미 수행되었는지 확인
+      if (!sessionStorage.getItem("alreadyRefreshed")) {
+        sessionStorage.setItem("alreadyRefreshed", "true"); // 플래그 설정
+        window.location.reload(); // 새로고침 수행
+      }
     })
     .catch(error => {
       console.error('Error:', error);
@@ -43,6 +49,7 @@ const Navbar = () => {
     localStorage.removeItem('name');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessToken');
+    sessionStorage.removeItem("alreadyRefreshed");
     setName('');
   }
 

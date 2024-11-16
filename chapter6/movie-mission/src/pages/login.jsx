@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import Inputs from "../components/Inputs";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../apis/axiosClient";
 
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -30,39 +31,25 @@ const LoginPage = () => {
   const { register, handleSubmit, formState: { errors, touchedFields, isValid },
           trigger, watch, reset, } = useForm({ resolver: yupResolver(schema), });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (isValid) {
       const userData = {
         email: data.email,
         password: data.password,
       };
 
-      fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          localStorage.setItem("refreshToken", data.refreshToken);
-          localStorage.setItem("accessToken", data.accessToken);
-          console.log("Success:", data);
-          alert("로그인 성공");
+      try {
+        const response = await apiClient.post("/auth/login", userData);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        alert("로그인 성공");
 
-          navigate("/");
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("로그인에 실패했습니다. 다시 시도해 주세요.");
-        });
+        navigate("/");
+        window.location.reload();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("로그인에 실패했습니다. 다시 시도해 주세요.");
+      }
     }
     reset();
   };
