@@ -1,40 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import apiClient from "../apis/apiClient";
 
 const Navbar = () => {
   const [name, setName] = useState('');
 
-  const getUsername = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    fetch('http://localhost:3000/user/me', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Success:', data);
+  const getUsername = async () => {
+    try {
+      const response = await apiClient.get("/user/me");
+      const data = response.data;
 
       const nameFromEmail = data.email.substring(0, data.email.indexOf('@'));
       localStorage.setItem("name", nameFromEmail);
-      
+
       // 새로고침이 이미 수행되었는지 확인
       if (!sessionStorage.getItem("alreadyRefreshed")) {
-        sessionStorage.setItem("alreadyRefreshed", "true"); // 플래그 설정
+        sessionStorage.setItem("alreadyRefreshed", true); // 플래그 설정
         window.location.reload(); // 새로고침 수행
       }
-    })
-    .catch(error => {
+    } catch (error) {
       console.error('Error:', error);
-    });
+    }
   }
 
   useEffect(() => {

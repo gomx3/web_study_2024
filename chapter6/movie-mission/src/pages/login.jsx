@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import Inputs from "../components/Inputs";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../apis/axiosClient";
+import apiClient from "../apis/apiClient";
 
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

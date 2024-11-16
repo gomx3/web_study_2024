@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useCustomFetch from "../hooks/useCustomFetch";
 import View from "../components/View";
-import { useEffect, useState } from "react";
+import CardSkeleton from "../components/CardSkeleton";
 
 const SearchPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -24,13 +25,6 @@ const SearchPage = () => {
     }
   }, [data]);
 
-  if (isLoading) {
-    return (
-      <Container>
-        <h1 style={{ color: "white" }}>로딩 중 입니다...</h1>
-      </Container>
-    );
-  }
   if (isError) {
     return (
       <Container>
@@ -50,10 +44,18 @@ const SearchPage = () => {
         />
         <Btn onClick={handleSearch}>검색</Btn>
       </InputWrapper>
-      {query && !isMovieExists ? (
-        <p style={{ color: "white" }}>'{query}'에 대한 검색 결과가 없습니다.</p>
+      {query ? (
+        isLoading ? (
+          <CardSkeleton num={15} />
+        ) : isMovieExists ? (
+          <View movies={data} />
+        ) : (
+          <p style={{ color: "white" }}>
+            '{query}'에 대한 검색 결과가 없습니다.
+          </p>
+        )
       ) : (
-        <View movies={data} />
+        <></>
       )}
     </Container>
   );
