@@ -9,7 +9,7 @@ const View = ({ movies }) => {
   return (
     <Container>
       <MovieList>
-        {movies.data?.results.map((movie) => (
+        {movies.results.map((movie) => (
           <MovieNavigate
             onClick={() =>
               navigate(`/movies/${movie.id}`, {

@@ -7,16 +7,12 @@ import { useGetMovies } from "../../hooks/queries/useGetMovies";
 import { useQuery } from "@tanstack/react-query";
 
 const NowPlaying = () => {
-  const { data: movies, isLoading, isError } = useCustomFetch(
-    `/movie/now_playing?language=ko-KR&page=2`
-  );
-
-  const data = useQuery({
+  const { data: movies, isPending, isLoading, isError } = useQuery({
     queryFn: () => useGetMovies({ category: "now_playing", pageParam: 1 }),
-    queryKey: ["movies"],
+    queryKey: ['movies', 'now_playing'],
   });
 
-  console.log(data);
+  console.log(movies);
 
   if (isError) {
     return (
@@ -29,7 +25,7 @@ const NowPlaying = () => {
   return (
     <Container>
       <TextBox>현재 상영 중인 작품</TextBox>
-      {isLoading ? <CardSkeleton num={15} /> : <View movies={data} />}
+      {isLoading ? <CardSkeleton num={15} /> : <View movies={movies} />}
     </Container>
   );
 };
