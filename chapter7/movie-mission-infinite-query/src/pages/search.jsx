@@ -1,29 +1,46 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import useCustomFetch from "../hooks/useCustomFetch";
-import View from "../components/View";
-import CardSkeleton from "../components/CardSkeleton";
+
+import Card from "../components/view/Card";
+import CardListSkeleton from "../components/view/CardListSkeleton";
+import { useGetInfiniteSearch } from "../hooks/useGetInfiniteSearch";
+import { useInView } from "react-intersection-observer";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const SearchPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [query, setQuery] = useState("");
   const [isMovieExists, setIsMovieExists] = useState(false);
 
-  const { data, isLoading, isError } = useCustomFetch(
-    `/search/movie?query=${query}&include_adult=false&language=ko-KR&page=1`
-  );
+  const {
+    data: movies,
+    isPending,
+    isFetching,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+  } = useGetInfiniteSearch(query);
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
 
   const handleSearch = () => {
     setQuery(inputValue);
   };
 
   useEffect(() => {
-    if (data.data?.results.length > 0) {
+    if (movies?.pages.map((page) => page.results).length > 0) {
       setIsMovieExists(true);
     } else {
       setIsMovieExists(false);
     }
-  }, [data]);
+
+    // 무한 스크롤
+    if (inView) {
+      !isFetching && hasNextPage && fetchNextPage();
+    }
+  }, [movies, inView, isFetching, hasNextPage, fetchNextPage]);
 
   if (isError) {
     return (
@@ -45,10 +62,16 @@ const SearchPage = () => {
         <Btn onClick={handleSearch}>검색</Btn>
       </InputWrapper>
       {query ? (
-        isLoading ? (
-          <CardSkeleton num={15} />
+        isPending ? (
+          <CardListSkeleton num={15} />
         ) : isMovieExists ? (
-          <View movies={data?.data} />
+          <MovieList>
+            {movies?.pages.map((page) => {
+              return page.results.map((movie, _) => {
+                return <Card movie={movie} key={movie.id} />;
+              });
+            })}
+          </MovieList>
         ) : (
           <p style={{ color: "white" }}>
             '{query}'에 대한 검색 결과가 없습니다.
@@ -57,6 +80,9 @@ const SearchPage = () => {
       ) : (
         <></>
       )}
+      <Spinner ref={ref}>
+        {isFetching && <BeatLoader color="#ffffff" margin={5} />}
+      </Spinner>
     </Container>
   );
 };
@@ -64,6 +90,8 @@ const SearchPage = () => {
 export default SearchPage;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 97px;
   left: 200px;
@@ -72,6 +100,11 @@ const Container = styled.div`
   background-color: black;
   box-sizing: border-box;
   padding: 20px 35px;
+
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const InputWrapper = styled.div`
   display: flex;
@@ -101,4 +134,14 @@ const Btn = styled.button`
     transition: color 0.3s ease;
     color: black;
   }
+`;
+const MovieList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+`;
+const Spinner = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
 `;

@@ -1,17 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useGetMovies } from "./queries/useGetMovies";
+import { useGetSearch } from "./queries/useGetSearch";
 
-function useGetInfiniteMovies(category) {
+function useGetInfiniteSearch(query) {
     return useInfiniteQuery({
-        queryFn: ({pageParam}) => useGetMovies({category, pageParam}),
-        queryKey: ['movies', category],
+        queryFn: ({pageParam}) => useGetSearch({query, pageParam}),
+        queryKey: ['movies', 'search', query],
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPage) => {
-            // const lastMovie = lastPage.results[lastPage.results.length - 1];
             const lastMovie = lastPage.results.at(-1);
             return lastMovie ? allPage?.length + 1 : undefined;            
         }
     })
 }
 
-export { useGetInfiniteMovies };
+export { useGetInfiniteSearch };

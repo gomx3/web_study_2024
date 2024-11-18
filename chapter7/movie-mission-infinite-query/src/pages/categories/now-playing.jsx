@@ -1,45 +1,64 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
-import View from "../../components/View";
-import Card from "../../components/Card";
-import CardSkeleton from "../../components/CardSkeleton";
-import { useGetMovies } from "../../hooks/queries/useGetMovies";
-import { useQuery } from "@tanstack/react-query";
+import Card from "../../components/view/Card";
+import CardListSkeleton from "../../components/view/CardListSkeleton";
 import { useGetInfiniteMovies } from "../../hooks/useGetInfiniteMovies";
 import { useInView } from "react-intersection-observer";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const NowPlaying = () => {
-  // const { data: movies, isPending, isError } = useQuery({
-  //   queryFn: () => useGetMovies({ category: "now_playing", pageParam: 1 }),
-  //   queryKey: ['movies', 'now_playing'],
-  //   cacheTime: 10000, // 10초 동안 캐시 데이터 유지
-  //   staleTime: 10000,
-  // });
+  const {
+    data: movies,
+    isPending,
+    isFetching,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+  } = useGetInfiniteMovies("now_playing");
 
-  const { data: movies, isPending } = useGetInfiniteMovies("now_playing");
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
 
-  // if (isError) {
-  //   return (
-  //     <Container>
-  //       <h1 style={{ color: "white" }}>에러 발생...</h1>
-  //     </Container>
-  //   );
-  // }
+  useEffect(() => {
+    if (inView) {
+      !isFetching && hasNextPage && fetchNextPage();
+    }
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
+
+  if (isError) {
+    return (
+      <Container>
+        <h1 style={{ color: "white" }}>에러 발생...</h1>
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <TextBox>현재 상영 중인 작품</TextBox>
-      <MovieList>
-        {movies?.pages.map((page) => {
-          return page.results.map((movie, _) => {
-            return <Card movie={movie} key={movie.id} />;
-          });
-        })}
-      </MovieList>
-      <Flag>
-        <h1>유우시보고싶다씨발</h1>
-      </Flag>
-      {/* {isPending ? <CardSkeleton num={15} /> : <View movies={movies} />} */}
+      {isPending ? (
+        <CardListSkeleton num={15} />
+      ) : (
+        <MovieList>
+          {/* {movies?.pages
+            .map((page) => page.results)
+            .flat()
+            .map((movie, _) => {
+              return <Card movie={movie} key={movie.id} />;
+            })} */}
+
+          {movies?.pages.map((page) => {
+            return page.results.map((movie, _) => {
+              return <Card movie={movie} key={movie.id} />;
+            });
+          })}
+        </MovieList>
+      )}
+      <Spinner ref={ref}>
+        {isFetching && <BeatLoader color="#ffffff" margin={5} />}
+      </Spinner>
     </Container>
   );
 };
@@ -71,7 +90,8 @@ const MovieList = styled.div`
 const TextBox = styled.h1`
   color: white;
 `;
-const Flag = styled.div`
-  background-color: skyblue;
-  width: 100px;
+const Spinner = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
 `;

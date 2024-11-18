@@ -1,18 +1,12 @@
 import styled, { keyframes } from "styled-components";
 
-const CardSkeleton = ({ num }) => {
+const CardSkeleton = () => {
   return (
-    <Container>
-      <MovieList>
-        {new Array(num).fill(0).map((_, idx) => (
-          <MovieItem key={idx}>
-            <MoviePoster />
-            <TitleBox />
-            <DescriptionBox />
-          </MovieItem>
-        ))}
-      </MovieList>
-    </Container>
+    <MovieItem>
+      <MoviePoster />
+      <TitleBox />
+      <DescriptionBox />
+    </MovieItem>
   );
 };
 
@@ -34,20 +28,6 @@ const skeleton = keyframes`
     100% {
         opacity: 1;
     }   
-`;
-const Container = styled.div`
-  height: calc(100vh - 220px);
-  overflow-y: auto;
-  padding-bottom: 20px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const MovieList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
 `;
 const MovieItem = styled.div`
   position: relative;
