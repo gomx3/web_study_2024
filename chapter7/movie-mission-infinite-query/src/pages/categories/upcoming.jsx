@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
-import Card from "../../components/Card";
+import View from "../../components/View";
 import CardSkeleton from "../../components/CardSkeleton";
 import { useGetMovies } from "../../hooks/queries/useGetMovies";
 import { useQuery } from "@tanstack/react-query";
 
-const TopRated = () => {
-
+const UpComing = () => {
+  
   const { data: movies, isPending, isError } = useQuery({
-    queryFn: () => useGetMovies({ category: "top_rated", pageParam: 1 }),
-    queryKey: ['movies', 'top_rated'],
+    queryFn: () => useGetMovies({ category: "upcoming", pageParam: 1 }),
+    queryKey: ['movies', 'upcoming'],
     cacheTime: 10000,
     staleTime: 10000, 
   });
@@ -24,21 +24,13 @@ const TopRated = () => {
 
   return (
     <Container>
-      <TextBox>높은 평가를 받은 작품</TextBox>
-      {isPending ? (
-        <CardSkeleton num={15} />
-      ) : (
-        <MovieList>
-          {movies?.results.map((movie) => {
-            return <Card movie={movie} key={movie.id} />;
-          })}
-        </MovieList>
-      )}
+      <TextBox>개봉 예정 중인 작품</TextBox>
+      {isPending ? <CardSkeleton num={15} /> : <View movies={movies} />}
     </Container>
   );
 };
 
-export default TopRated;
+export default UpComing;
 
 const Container = styled.div`
   position: fixed;
@@ -49,16 +41,6 @@ const Container = styled.div`
   background-color: black;
   box-sizing: border-box;
   padding: 20px 35px;
-
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const MovieList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
 `;
 const TextBox = styled.h1`
   color: white;

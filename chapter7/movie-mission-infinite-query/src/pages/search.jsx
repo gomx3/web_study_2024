@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useCustomFetch from "../hooks/useCustomFetch";
-import Card from "../components/Card";
+import View from "../components/View";
 import CardSkeleton from "../components/CardSkeleton";
 
 const SearchPage = () => {
@@ -48,11 +48,7 @@ const SearchPage = () => {
         isLoading ? (
           <CardSkeleton num={15} />
         ) : isMovieExists ? (
-          <MovieList>
-            {data.data?.results.map((movie) => {
-              return <Card movie={movie} key={movie.id} />;
-            })}
-          </MovieList>
+          <View movies={data?.data} />
         ) : (
           <p style={{ color: "white" }}>
             '{query}'에 대한 검색 결과가 없습니다.
@@ -76,16 +72,6 @@ const Container = styled.div`
   background-color: black;
   box-sizing: border-box;
   padding: 20px 35px;
-
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const MovieList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
 `;
 const InputWrapper = styled.div`
   display: flex;

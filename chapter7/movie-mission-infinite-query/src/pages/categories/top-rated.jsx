@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Card from "../../components/Card";
+import View from "../../components/View";
 import CardSkeleton from "../../components/CardSkeleton";
 import { useGetMovies } from "../../hooks/queries/useGetMovies";
 import { useQuery } from "@tanstack/react-query";
@@ -25,15 +25,7 @@ const TopRated = () => {
   return (
     <Container>
       <TextBox>높은 평가를 받은 작품</TextBox>
-      {isPending ? (
-        <CardSkeleton num={15} />
-      ) : (
-        <MovieList>
-          {movies?.results.map((movie) => {
-            return <Card movie={movie} key={movie.id} />;
-          })}
-        </MovieList>
-      )}
+      {isPending ? <CardSkeleton num={15} /> : <View movies={movies} />}
     </Container>
   );
 };
@@ -49,16 +41,6 @@ const Container = styled.div`
   background-color: black;
   box-sizing: border-box;
   padding: 20px 35px;
-
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const MovieList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
 `;
 const TextBox = styled.h1`
   color: white;
