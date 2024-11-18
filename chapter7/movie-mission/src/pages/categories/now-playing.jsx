@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
 import View from "../../components/View";
-import useCustomFetch from "../../hooks/useCustomFetch";
 import CardSkeleton from "../../components/CardSkeleton";
 import { useGetMovies } from "../../hooks/queries/useGetMovies";
 import { useQuery } from "@tanstack/react-query";
 
 const NowPlaying = () => {
-  const { data: movies, isPending, isLoading, isError } = useQuery({
+
+  const { data: movies, isPending, isError } = useQuery({
     queryFn: () => useGetMovies({ category: "now_playing", pageParam: 1 }),
     queryKey: ['movies', 'now_playing'],
+    cacheTime: 10000, // 10초 동안 캐시 데이터 유지
+    staleTime: 10000, 
   });
-
-  console.log(movies);
 
   if (isError) {
     return (
@@ -25,7 +25,7 @@ const NowPlaying = () => {
   return (
     <Container>
       <TextBox>현재 상영 중인 작품</TextBox>
-      {isLoading ? <CardSkeleton num={15} /> : <View movies={movies} />}
+      {isPending ? <CardSkeleton num={15} /> : <View movies={movies} />}
     </Container>
   );
 };

@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 import View from "../../components/View";
-import useCustomFetch from "../../hooks/useCustomFetch";
 import CardSkeleton from "../../components/CardSkeleton";
+import { useGetMovies } from "../../hooks/queries/useGetMovies";
+import { useQuery } from "@tanstack/react-query";
 
 const TopRated = () => {
-  const { data, isLoading, isError } = useCustomFetch(
-    `/movie/top_rated?language=ko-KR&page=1`
-  );
+
+  const { data: movies, isPending, isError } = useQuery({
+    queryFn: () => useGetMovies({ category: "top_rated", pageParam: 1 }),
+    queryKey: ['movies', 'top_rated'],
+    cacheTime: 10000,
+    staleTime: 10000, 
+  });
 
   if (isError) {
     return (
@@ -20,7 +25,7 @@ const TopRated = () => {
   return (
     <Container>
       <TextBox>높은 평가를 받은 작품</TextBox>
-      {isLoading ? <CardSkeleton num={15} /> : <View movies={data} />}
+      {isPending ? <CardSkeleton num={15} /> : <View movies={movies} />}
     </Container>
   );
 };

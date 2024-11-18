@@ -6,35 +6,35 @@ import Credits from "./Credits";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Detail = ({ movie }) => {
-  const releaseYear = movie.data?.release_date.split("-")[0];
-  
+  const releaseYear = movie?.release_date.split("-")[0];
+  console.log(movie);
   return (
     <Container>
       <LeftSection>
         <PosterItem>
           <PosterImg
-            src={`${IMAGE_BASE_URL}${movie.data?.poster_path}`}
-            alt={movie.data?.title}
+            src={`${IMAGE_BASE_URL}${movie?.poster_path}`}
+            alt={movie?.title}
           />
         </PosterItem>
       </LeftSection>
 
       <RightSection>
-        <Title>{movie.data?.title}</Title>
+        <Title>{movie?.title}</Title>
 
         <p style={{ color: "white", margin: "10px 0", fontSize: "20px" }}>
           {releaseYear}
         </p>
         <SmallText>
-          {movie.data?.runtime}분<br />
-          장르: {movie.data?.genres.map((genre) => genre.name).join(", ")}<br />
-          평점: {movie.data?.vote_average} ({movie.data?.vote_count})
+          {movie?.runtime}분<br />
+          장르: {movie?.genres.map((genre) => genre.name).join(", ")}<br />
+          평점: {movie?.vote_average} ({movie?.vote_count})
         </SmallText>
 
-        <Tagline>{movie.data?.tagline}</Tagline>
+        <Tagline>{movie?.tagline}</Tagline>
         <MovieOverview movie={movie} />
 
-        <Credits movieId={movie.data?.id} />
+        <Credits movieId={movie?.id} />
       </RightSection>
     </Container>
   );

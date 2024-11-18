@@ -1,18 +1,22 @@
 import styled from "styled-components";
 
-import useCustomFetch from "../hooks/useCustomFetch";
+import { useQuery } from "@tanstack/react-query";
+import { useGetCredits } from "../../hooks/queries/useGetCredits";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Credits = ({ movieId }) => {
-  const { data, isLoading, isError } = useCustomFetch(
-    `/movie/${movieId}/credits?language=ko-KR`
-  );
+  const { data, isPending, isError } = useQuery({
+    queryFn: () => useGetCredits({ movieId }),
+    queryKey: ['credits', movieId],
+    cacheTime: 10000,
+    staleTime: 10000,
+  })
 
   return (
     <Container>
       <CastList>
-        {data.data?.cast.map((cast) => (
+        {data?.cast.map((cast) => (
           <CastItem key={cast.cast_id}>
             <ImgContainer>
               <CastImg
@@ -58,7 +62,7 @@ const ImgContainer = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 2px solid #ededed; /* 흰색 테두리 */
+  border: 2px solid #ededed;
   display: flex;
   align-items: center;
   justify-content: center;

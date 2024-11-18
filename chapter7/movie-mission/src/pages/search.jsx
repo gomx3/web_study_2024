@@ -48,7 +48,7 @@ const SearchPage = () => {
         isLoading ? (
           <CardSkeleton num={15} />
         ) : isMovieExists ? (
-          <View movies={data} />
+          <View movies={data?.data} />
         ) : (
           <p style={{ color: "white" }}>
             '{query}'에 대한 검색 결과가 없습니다.

@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 import View from "../../components/View";
-import useCustomFetch from "../../hooks/useCustomFetch";
 import CardSkeleton from "../../components/CardSkeleton";
+import { useGetMovies } from "../../hooks/queries/useGetMovies";
+import { useQuery } from "@tanstack/react-query";
 
 const Popular = () => {
-  const { data, isLoading, isError } = useCustomFetch(
-    `/movie/popular?language=ko-KR&page=1`
-  );
+
+  const { data: movies, isPending, isError } = useQuery({
+    queryFn: () => useGetMovies({ category: "popular", pageParam: 1 }),
+    queryKey: ['movies', 'popular'],
+    cacheTime: 10000,
+    staleTime: 10000, 
+  });
 
   if (isError) {
     return (
@@ -20,7 +25,7 @@ const Popular = () => {
   return (
     <Container>
       <TextBox>인기 있는 작품</TextBox>
-      {isLoading ? <CardSkeleton num={15} /> : <View movies={data} />}
+      {isPending ? <CardSkeleton num={15} /> : <View movies={movies} />}
     </Container>
   );
 };

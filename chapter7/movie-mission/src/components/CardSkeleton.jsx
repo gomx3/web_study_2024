@@ -22,14 +22,14 @@ const skeleton = keyframes`
     0% {
         opacity: 1;
     }   
-    30% {
-        opacity: 0.8;
+    25% {
+        opacity: 0.6;
     }
     50% {
-        opacity: 0.5;
+        opacity: 1;
     }   
-    80% {
-        opacity: 0.8;
+    75% {
+        opacity: 0.7;
     }
     100% {
         opacity: 1;

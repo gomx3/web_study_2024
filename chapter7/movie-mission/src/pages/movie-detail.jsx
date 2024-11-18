@@ -1,16 +1,21 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import useCustomFetch from "../hooks/useCustomFetch";
-import Detail from "../components/Detail";
+import Detail from "../components/detail-page/Detail";
+import { useQuery } from "@tanstack/react-query";
+import { useGetDetails } from "../hooks/queries/useGetDetails";
 
 const MovieDetailPage = () => {
-  const {movieId} = useParams();
-  const { data, isLoading, isError } = useCustomFetch(
-    `/movie/${movieId}?language=ko-KR`
-  );
 
-  if (isLoading) {
+  const { movieId } = useParams();
+  const { data: movie, isPending, isError } = useQuery({
+    queryFn: () => useGetDetails({ movieId }),
+    queryKey: ['details', movieId],
+    cacheTime: 10000,
+    staleTime: 10000,
+  })
+  
+  if (isPending) {
     return (
       <MsgContainer>
         <h1 style={{ color: "white" }}>로딩 중 입니다...</h1>
@@ -27,7 +32,7 @@ const MovieDetailPage = () => {
 
   return (
     <Container>
-      <Detail movie={data}/>
+      <Detail movie={movie}/>
     </Container>
   );
 };

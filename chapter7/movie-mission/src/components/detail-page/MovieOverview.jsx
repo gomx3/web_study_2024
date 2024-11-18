@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const MovieOverview = ({ movie }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const maxLength = 150; // 원하는 글자수 설정
+  const maxLength = 150;
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -17,11 +17,11 @@ const MovieOverview = ({ movie }) => {
   return (
     <div>
       <Text>
-        {movie.data?.overview.length > maxLength
-          ? movie.data?.overview.slice(0, maxLength) + "..."
-          : movie.data?.overview}
+        {movie?.overview.length > maxLength
+          ? movie?.overview.slice(0, maxLength) + "..."
+          : movie?.overview}
       </Text>
-      {movie.data?.overview.length > maxLength && (
+      {movie?.overview.length > maxLength && (
         <ReadMoreButton onClick={handleOpenModal}>더보기</ReadMoreButton>
       )}
 
@@ -45,7 +45,7 @@ const MovieOverview = ({ movie }) => {
         ariaHideApp={false}
       >
         <ModalContent>
-          <p>{movie.data?.overview}</p>
+          <p>{movie?.overview}</p>
         </ModalContent>
       </Modal>
     </div>
