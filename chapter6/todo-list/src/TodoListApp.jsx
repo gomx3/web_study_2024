@@ -45,7 +45,7 @@ function TodoListApp({ toggleTheme }) {
     <Container className={theme}>
       <div>
         <TitleWrapper>
-          <h1>TODO🚶🚶🚶</h1>
+          <h1>TO-DO🚶🚶🚶</h1>
           <Toggle toggleTheme={toggleTheme} />
         </TitleWrapper>
         <InputForm onSubmit={handleSubmit}>
@@ -55,7 +55,7 @@ function TodoListApp({ toggleTheme }) {
             onChange={(e) => setText(e.target.value)}
             placeholder="할 일을 입력하세요"
           />
-          <Button onClick={addTodo}>할 일 등록</Button>
+          <Button onClick={addTodo}>등록</Button>
         </InputForm>
         <ItemList
           className={theme}
@@ -85,6 +85,7 @@ const TitleWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 350px;
 `;
 const InputForm = styled.form`
   display: flex;

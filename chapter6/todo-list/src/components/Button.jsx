@@ -12,7 +12,7 @@ function Button({ children, onClick }) {
 export default Button;
 
 const Btn = styled.button`
-  padding: 4px 6px;
+  padding: 5px 8px;
   margin-left: 5px;
   border: none;
   border-radius: 12px;
