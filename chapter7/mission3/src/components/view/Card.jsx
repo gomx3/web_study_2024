@@ -29,20 +29,6 @@ const Card = ({ movie }) => {
 
 export default Card;
 
-const Container = styled.div`
-  height: calc(100vh - 220px);
-  overflow-y: auto;
-  padding-bottom: 20px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const MovieList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-`;
 const MovieNavigate = styled.div`
   position: relative;
   text-decoration: none;

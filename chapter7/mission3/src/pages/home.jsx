@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import Card from "../components/view/Card";
 import CardListSkeleton from "../components/view/CardListSkeleton";
-import { useInView } from "react-intersection-observer";
-import BeatLoader from "react-spinners/BeatLoader";
 import { useGetDiscoveryPages } from "../hooks/useGetDiscoveryPages";
 
 const HomePage = () => {
@@ -12,20 +10,8 @@ const HomePage = () => {
   const {
     data: movies,
     isPending,
-    isFetching,
     isError,
-    isPreviousData,
-    hasNextPage,
-    fetchNextPage,
-  } = useGetDiscoveryPages();
-
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
-
-  useEffect(() => {
-
-  }, [isFetching, hasNextPage, fetchNextPage]);
+  } = useGetDiscoveryPages(page + 1);
 
   if (isError) {
     return (
@@ -37,37 +23,26 @@ const HomePage = () => {
 
   return (
     <Container>
+      <TextBox>홈</TextBox>
       {isPending ? (
         <CardListSkeleton num={15} />
       ) : (
         <MovieList>
-          {movies?.pages.map((page) => {
-            return page.results.map((movie, _) => {
-              return <Card movie={movie} key={movie.id} />;
-            });
+          {movies?.results.map((movie, _) => {
+            return <Card movie={movie} key={movie.id} />;
           })}
         </MovieList>
       )}
-      <span style={{ color: "white" }}>Current Page: {page + 1}</span>
-      <button
-        onClick={() => setPage(old => Math.max(old - 1, 0))}
-        disabled={page === 0}>
-          Previous Page
-      </button>{' '}
-      <button
-        onClick={() => {
-          if (!isPreviousData && hasNextPage) {
-            setPage(old => old + 1)
-          }
-        }}
-        // Disable the Next Page button until we know a next page is available
-        disabled={isPreviousData || !hasNextPage}
-      >
-        Next Page
-      </button>
-      <Spinner ref={ref}>
-        {isFetching && <BeatLoader color="#ffffff" margin={5} />}
-      </Spinner>
+      <Pagination>
+        <button
+          onClick={() => setPage((old) => Math.max(old - 1, 0))}
+          disabled={page === 0}
+        >
+          이전
+        </button>
+        <span style={{ color: "white" }}>{page + 1} 페이지</span>
+        <button onClick={() => setPage((old) => old + 1)}>다음</button>
+      </Pagination>
     </Container>
   );
 };
@@ -93,11 +68,35 @@ const Container = styled.div`
 `;
 const MovieList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 20px;
 `;
-const Spinner = styled.div`
+const TextBox = styled.h1`
+  color: white;
+`;
+const Pagination = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 50px 0;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #ff007c;
+    transition: color 0.3s ease;
+
+    &:disabled {
+      background: #333;
+    }
+    &:hover {
+      color: black;
+    }
+  }
 `;

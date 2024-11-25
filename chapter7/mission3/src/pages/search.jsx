@@ -81,7 +81,7 @@ const SearchPage = () => {
         <></>
       )}
       <Spinner ref={ref}>
-        {isFetching && <BeatLoader color="#ffffff" margin={5} />}
+        {query && isFetching && <BeatLoader color="#ffffff" margin={5} />}
       </Spinner>
     </Container>
   );
