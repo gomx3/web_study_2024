@@ -1,45 +1,27 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { postTodo } from "../apis/postTodo";
 
 const InputBox = () => {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
-  console.log(title);
-  console.log(content);
-
-  const postTodo = ({ title, content }) => {
-
-    const todoData = {
-        title: title,
-        content: content,
-        checked: false,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await postTodo(title, content);
+      console.log("Success: ", data);
+      setTitle("");
+      setContent("");
+    } catch (error) {
+      console.log("Error: ", error);
     }
-
-    fetch("http://localhost:3000/todo", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(todoData),
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json();
-    })
-    .then((data) => {
-        console.log("Success: ", data);
-    })
-    .catch((error) => {
-        console.log("Error: ", error);
-    });
-
-  };
+    window.location.reload();
+  }
+  const isValid = title.trim() !== "" && content.trim() !== "";
 
   return (
-    <WrapperForm onSubmit={handelSubmit(postTodo)}>
+    <FormWrapper onSubmit={handleSubmit}>
       <Input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -50,18 +32,19 @@ const InputBox = () => {
         onChange={(e) => setContent(e.target.value)}
         placeholder={"내용을 입력해주세요"}
       />
-      <Btn onClick={addTodo}>TO-DO 생성</Btn>
-    </WrapperForm>
+      <Btn type="submit" disabled={!isValid}>TO-DO 생성</Btn>
+    </FormWrapper>
   );
 };
 
 export default InputBox;
 
-const WrapperForm = styled.form`
+const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 `;
 const Input = styled.input`
   padding: 5px 10px;
@@ -69,7 +52,9 @@ const Input = styled.input`
   border-radius: 8px;
   font-family: roboto;
   margin: 3px 0px;
-  width: 300px;
+  width: 50vw;
+  max-width: 500px;
+  min-width: 200px;
 `;
 const Btn = styled.button`
   padding: 5px 10px;
