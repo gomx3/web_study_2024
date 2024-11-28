@@ -10,7 +10,7 @@ const useCustomFetch = (url) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(url);
+        const response = await axios.get("http://localhost:3000" + url);
         setData(response);
       } catch (error) {
         setIsError(true);

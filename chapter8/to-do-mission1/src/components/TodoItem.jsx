@@ -1,6 +1,23 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import DelButton from "./buttons/DelButton";
+import CompleteEditButton from "./buttons/CompleteEditButton";
+import EditInput from "./EditInput";
 
 const TodoItem = ({ todo }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(todo.title);
+  const [editContent, setEditContent] = useState(todo.content);
+  const navigate = useNavigate();
+
+  const handleEditBtn = () => {
+    setIsEditing(true);
+    setEditTitle("");
+    setEditContent("");
+    setEditChecked(false);
+  };
+
   return (
     <ItemWrapper>
       <div
@@ -12,13 +29,42 @@ const TodoItem = ({ todo }) => {
       >
         <CheckBox type="checkbox" checked={todo.checked} />
         <TextWrapper>
-          <TextBox className="title" >{todo.title}</TextBox>
-          <TextBox>{todo.content}</TextBox>
+          {isEditing ? (
+            <>
+              <EditInput defaultText={todo.title} setEditText={setEditTitle} />
+              <EditInput defaultText={todo.content} setEditText={setEditContent} />
+            </>
+          ) : (
+            <>
+              <TitleNavigate
+                onClick={() => {
+                  navigate(`/todo/${todo.id}`, {
+                    replace: false,
+                    state: {},
+                  });
+                }}
+              >
+                {todo.title}
+              </TitleNavigate>
+              <ContentText>{todo.content}</ContentText>
+            </>
+          )}
         </TextWrapper>
       </div>
       <BtnWrapper>
-        <Btn>수정</Btn>
-        <Btn>삭제</Btn>
+        {isEditing ? (
+          <CompleteEditButton
+            todoId={todo.id}
+            title={editTitle}
+            content={editContent}
+            checked={todo.checked}
+          />
+        ) : (
+          <>
+            <Btn onClick={handleEditBtn}>수정</Btn>
+            <DelButton todoId={todo.id} />
+          </>
+        )}
       </BtnWrapper>
     </ItemWrapper>
   );
@@ -48,11 +94,16 @@ const TextWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
 `;
-const TextBox = styled.div`
-  font-size: 14px;
-  &.title {
-    font-weight: bold;
+const TitleNavigate = styled.div`
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
   }
+`;
+const ContentText = styled.div`
+  font-size: 14px;
 `;
 const BtnWrapper = styled.div`
   justify-content: flex-start;

@@ -2,19 +2,19 @@ import { useState } from "react";
 import styled from "styled-components";
 import { postTodo } from "../apis/postTodo";
 
-const InputBox = () => {
+const InputSection = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await postTodo(title, content);
-      console.log("Success: ", data);
+      const result = await postTodo(title, content);
+      console.log("Success: ", result);
       setTitle("");
       setContent("");
     } catch (error) {
-      console.log("Error: ", error);
+      console.log(error);
     }
     window.location.reload();
   }
@@ -37,7 +37,7 @@ const InputBox = () => {
   );
 };
 
-export default InputBox;
+export default InputSection;
 
 const FormWrapper = styled.form`
   display: flex;

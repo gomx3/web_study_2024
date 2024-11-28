@@ -1,13 +1,13 @@
-const postTodo = async (title, content) => {
+const patchTodo = async (todoId, title, content, checked) => {
   const todoData = {
     title: title,
     content: content,
-    checked: false,
+    checked: checked,
   };
 
   try {
-    const response = await fetch(`http://localhost:3000/todo`, {
-      method: "POST",
+    const response = await fetch(`http://localhost:3000/todo/${todoId}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -24,4 +24,4 @@ const postTodo = async (title, content) => {
   }
 };
 
-export { postTodo };
+export { patchTodo };
