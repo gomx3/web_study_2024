@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DelButton from "./buttons/DelButton";
 import CompleteEditButton from "./buttons/CompleteEditButton";
-import EditInput from "./EditInput";
+import EditInput from "./items/EditInput";
+import CheckBox from "./items/CheckBox";
 
 const TodoItem = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +28,7 @@ const TodoItem = ({ todo }) => {
           justifyContent: "center",
         }}
       >
-        <CheckBox type="checkbox" checked={todo.checked} />
+        <CheckBox todoId={todo.id} title={todo.title} content={todo.content} checked={todo.checked} />
         <TextWrapper>
           {isEditing ? (
             <>
@@ -85,10 +86,6 @@ const ItemWrapper = styled.div`
   max-width: 500px;
   min-width: 200px;
 `;
-const CheckBox = styled.input`
-  margin-right: 10px;
-`;
-
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -114,4 +111,8 @@ const Btn = styled.button`
   border: none;
   border-radius: 8px;
   margin: 3px 0px 3px 4px;
+  
+  &:hover {
+    cursor: pointer;
+  }
 `;

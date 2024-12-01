@@ -6,7 +6,7 @@ import useCustomFetch from "../hooks/useCustomFetch";
 import DelButton from "../components/buttons/DelButton";
 import CompleteEditButton from "../components/buttons/CompleteEditButton";
 import ClipLoader from "react-spinners/ClipLoader";
-import EditInput from "../components/EditInput";
+import EditInput from "../components/items/EditInput";
 
 const TodoDetail = () => {
   const { todoId } = useParams();
@@ -45,7 +45,7 @@ const TodoDetail = () => {
             </>
           )}
           <TextBox>{todo.createdAt}</TextBox>
-          {todo.checked ? <TextBox>완료</TextBox> : <TextBox>진행 중</TextBox>}
+          {todo.checked ? <TextBox>완료</TextBox> : <TextBox>진행 중 .. 🏃‍➡️</TextBox>}
         </>
       )}
       <BtnWrapper>
@@ -64,7 +64,7 @@ const TodoDetail = () => {
             todoId={todo.id}
             title={editTitle}
             content={editContent}
-            checked={false}
+            checked={todo.checked}
           />
         ) : (
           <Btn onClick={handleEditBtn}>수정</Btn>
