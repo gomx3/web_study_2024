@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
     <nav>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <h3>your ... ☠️</h3>
+      <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+        <p>☠️☠️☠️</p>
       </div>
     </nav>
   );

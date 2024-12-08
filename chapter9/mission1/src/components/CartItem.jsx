@@ -8,20 +8,22 @@ const CartItem = ({ id, title, singer, price, img, amount }) => {
   const dispatch = useDispatch();
 
   return (
-    <article>
-      <img src={img} alt={`${title} 이미지`} />
-      <div>
-        <h4>
-          {title} | {singer}
-        </h4>
-        <h4>{price}원</h4>
+    <ArticleContainer>
+      <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+        <img src={img} width="100px" height="100px" alt={`${title} 이미지`} />
+        <DetailBox>
+          <TextBox>
+            {title} | {singer}
+          </TextBox>
+          <TextBox className="price">\{price}</TextBox>
+        </DetailBox>
       </div>
-      <div>
-        <button onClick={() => dispatch(increase(id))}>
+      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <AmountBtn onClick={() => dispatch(increase(id))}>
           <ChevronUp />
-        </button>
+        </AmountBtn>
         <p>{amount}</p>
-        <button
+        <AmountBtn
           onClick={() => {
             if (amount === 1) {
               dispatch(removeItem(id));
@@ -31,10 +33,36 @@ const CartItem = ({ id, title, singer, price, img, amount }) => {
           }}
         >
           <ChevronDown />
-        </button>
+        </AmountBtn>
       </div>
-    </article>
+    </ArticleContainer>
   );
 };
 
 export default CartItem;
+
+const ArticleContainer = styled.article`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  width: 80vw;
+`;
+const DetailBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+`
+const TextBox = styled.h4`
+  margin: 7px 0;
+  font-weight: 500;
+`
+const AmountBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  border: none;
+  background: none;
+`
