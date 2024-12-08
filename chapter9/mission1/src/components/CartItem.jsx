@@ -65,4 +65,7 @@ const AmountBtn = styled.button`
   width: 30px;
   border: none;
   background: none;
+  &:hover {
+    cursor: pointer;
+  }
 `

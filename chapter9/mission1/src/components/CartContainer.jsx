@@ -74,4 +74,7 @@ const CartResetBtn = styled.button`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 15px;
+  &:hover {
+    cursor: pointer;
+  }
 `
